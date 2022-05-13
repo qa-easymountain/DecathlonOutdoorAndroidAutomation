@@ -5,8 +5,6 @@ import java.util.concurrent.TimeUnit;
 import org.openqa.selenium.By;
 import org.openqa.selenium.Dimension;
 import org.openqa.selenium.WebElement;
-//import org.openqa.selenium.By;
-//import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -35,8 +33,6 @@ public class login extends base {
 		
 		System.out.println("Cliqué sur Accepter & Fermer");
 			
-		
-        
        //===================== Swipe for beta test ===================
 		Thread.sleep(3000);
         WebElement betaPanel1 = driver.findElement(By.xpath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.RelativeLayout/android.widget.RelativeLayout/androidx.viewpager.widget.ViewPager/android.widget.RelativeLayout"));
@@ -57,21 +53,19 @@ public class login extends base {
         AndroidElement welcomeAgree = driver.findElementById("com.decathlon.quechuafinder:id/onboard_proceed_btn");
         welcomeAgree.click();
                 
-    	// select location next to you
+    	// select location next to you (
         Thread.sleep(3000);
         AndroidElement locationSelector = driver.findElementById("com.android.permissioncontroller:id/permission_location_accuracy_radio_fine");
         locationSelector.click();
         
-        // give permission to selected location
+        // give permission while using application
         Thread.sleep(3000);
         AndroidElement locationPermissionAllowUsingThisAppButton = (AndroidElement) new WebDriverWait(driver, 30).until(
-                ExpectedConditions.presenceOfElementLocated(MobileBy.id("com.android.permissioncontroller:id/permission_allow_foreground_only_button"))
+        		ExpectedConditions.presenceOfElementLocated(MobileBy.id("com.android.permissioncontroller:id/permission_allow_foreground_only_button"))
         );
         locationPermissionAllowUsingThisAppButton.click();					
 		
-		
-		
-		// GoTo Profile Page for Login 
+		// GoTo Profile Page for Login (click on profile option)
         Thread.sleep(3000);
 	    AndroidElement profilePageButton = (AndroidElement) new WebDriverWait(driver, 30).until(
 	            ExpectedConditions.presenceOfElementLocated(MobileBy.id("com.decathlon.quechuafinder:id/profile_nav_menu"))
@@ -81,7 +75,6 @@ public class login extends base {
 	    //click on connect to login page //Continue avec decathlon
 	    Thread.sleep(3000);
 	    AndroidElement decathlonConnectionButton = (AndroidElement) new WebDriverWait(driver, 30).until(
-	            //ExpectedConditions.presenceOfElementLocated(MobileBy.id("com.decathlon.quechuafinder:id/connect_btn"))
 	            ExpectedConditions.presenceOfElementLocated(MobileBy.id("com.decathlon.quechuafinder:id/btn_decathlon_login"))
 	    );
 	    decathlonConnectionButton.click();
@@ -120,15 +113,14 @@ public class login extends base {
 	    
 	    signinButton.click();
 	    
+	    //Check whether you are logged-in with username
 	    Thread.sleep(3000);
 	    @SuppressWarnings("unused")
 		AndroidElement usernameprofile = (AndroidElement) new WebDriverWait(driver, 30).until(
 	            ExpectedConditions.presenceOfElementLocated(MobileBy.id("com.decathlon.quechuafinder:id/username_profile"))
 	    );
 	    System.out.println("Login Successfully");
-	    //close the driver
 	    
-	    //driver.close();
 	    Thread.sleep(7000);
 		
 		driver.quit();
