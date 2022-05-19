@@ -114,14 +114,14 @@ public class login extends base {
 	    signinButton.click();
 	    
 	    //Check whether you are logged-in with username
-	    Thread.sleep(3000);
+	    Thread.sleep(1000);
 	    @SuppressWarnings("unused")
 		AndroidElement usernameprofile = (AndroidElement) new WebDriverWait(driver, 30).until(
 	            ExpectedConditions.presenceOfElementLocated(MobileBy.id("com.decathlon.quechuafinder:id/username_profile"))
 	    );
 	    System.out.println("Login Successfully");
 	    
-	    Thread.sleep(7000);
+	    Thread.sleep(3000);
 		
 		driver.quit();
 	   
