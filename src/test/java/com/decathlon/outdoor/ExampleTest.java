@@ -18,7 +18,7 @@ class ExampleTest {
 
     @BeforeEach
     void setup() throws MalformedURLException {
-        var apkFile = "4.16.0 adding_missing_ids.apk";
+        var apkFile = "Decathlonoutdoorandroid-2022051707.apk";
         driver = AndroidDriverBuilder.buildDriver(apkFile);
     }
 

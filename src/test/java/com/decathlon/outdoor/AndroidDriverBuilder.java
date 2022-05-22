@@ -18,7 +18,7 @@ public class AndroidDriverBuilder {
         }
         DesiredCapabilities cap = new DesiredCapabilities();
         //here we set our android emulator
-        cap.setCapability(MobileCapabilityType.DEVICE_NAME, "PoojaEmulatorPixel5API32");
+        cap.setCapability(MobileCapabilityType.DEVICE_NAME, "PoojaEmulatorAppDebug");
         //here we set our capability type
         cap.setCapability(MobileCapabilityType.APP, app.getAbsolutePath());
 
