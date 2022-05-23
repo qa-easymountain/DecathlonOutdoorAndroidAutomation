@@ -18,7 +18,7 @@ class ExampleTest {
 
     @BeforeEach
     void setup() throws MalformedURLException {
-        var apkFile = "Decathlonoutdoorandroid-2022051707.apk";
+        String apkFile = "Decathlonoutdoorandroid-2022051707.apk";
         driver = AndroidDriverBuilder.buildDriver(apkFile);
     }
 
@@ -27,7 +27,7 @@ class ExampleTest {
     void test1() {
         // Given
         // 'theElement' is clickable
-        var theElement = (AndroidElement) new WebDriverWait(driver, 30).until(
+        AndroidElement theElement = (AndroidElement) new WebDriverWait(driver, 30).until(
                 ExpectedConditions.elementToBeClickable(MobileBy.AccessibilityId("the-element-id")));
 
         // When
@@ -36,7 +36,7 @@ class ExampleTest {
 
         // Then
         // 'theOtherElement' should be visible
-        var theOtherElement = (AndroidElement) new WebDriverWait(driver, 30).until(
+        AndroidElement theOtherElement = (AndroidElement) new WebDriverWait(driver, 30).until(
                 ExpectedConditions.visibilityOfElementLocated(MobileBy.AccessibilityId("the-other-element-id")));
 
         // 'theOtherElement''s text should be as expected
