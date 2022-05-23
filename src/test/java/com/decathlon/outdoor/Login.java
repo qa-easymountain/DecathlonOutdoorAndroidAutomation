@@ -22,39 +22,39 @@ public class Login {
 
     @Test
     @DisplayName("it should be able to login")
-    void login() throws InterruptedException{
+    void login() {
 
-        var acceptAndCloseButton = (AndroidElement) new WebDriverWait(driver, 30).until(
+        AndroidElement acceptAndCloseButton = (AndroidElement) new WebDriverWait(driver, 30).until(
                 ExpectedConditions.elementToBeClickable(MobileBy.id("com.decathlon.quechuafinder:id/button_agree")));
         acceptAndCloseButton.click();
         System.out.println("Cliqué sur Accepter & Fermer");
 
         //Onboard and procees Button
-        var welcomeAgree = (AndroidElement) new WebDriverWait(driver, 30).until(
+        AndroidElement welcomeAgree = (AndroidElement) new WebDriverWait(driver, 30).until(
                 ExpectedConditions.elementToBeClickable(MobileBy.id("com.decathlon.quechuafinder:id/onboard_proceed_btn")));
         welcomeAgree.click();
 
         // select location next to you
-        var locationSelector = (AndroidElement) new WebDriverWait(driver,  30).until(
+        AndroidElement locationSelector = (AndroidElement) new WebDriverWait(driver,  30).until(
                 ExpectedConditions.elementToBeClickable(MobileBy.id("com.android.permissioncontroller:id/permission_location_accuracy_radio_fine")));
         locationSelector.click();
 
         // give permission while using application
-        var locationPermissionAllowUsingThisAppButton = (AndroidElement) new WebDriverWait(driver, 30).until(
+        AndroidElement locationPermissionAllowUsingThisAppButton = (AndroidElement) new WebDriverWait(driver, 30).until(
                 ExpectedConditions.presenceOfElementLocated(MobileBy.id("com.android.permissioncontroller:id/permission_allow_foreground_only_button"))
         );
         locationPermissionAllowUsingThisAppButton.click();
 
         // GoTo Profile Page for Login (click on profile option)
         //Thread.sleep(3000);
-        var profilePageButton = (AndroidElement) new WebDriverWait(driver, 30).until(
+        AndroidElement profilePageButton = (AndroidElement) new WebDriverWait(driver, 30).until(
                 ExpectedConditions.presenceOfElementLocated(MobileBy.id("com.decathlon.quechuafinder:id/profile_nav_menu"))
         );
         profilePageButton.click();
 
         //click on connect to login page //Continue avec decathlon
         //Thread.sleep(3000);
-        var decathlonConnectionButton = (AndroidElement) new WebDriverWait(driver, 30).until(
+        AndroidElement decathlonConnectionButton = (AndroidElement) new WebDriverWait(driver, 30).until(
                 ExpectedConditions.presenceOfElementLocated(MobileBy.id("com.decathlon.quechuafinder:id/btn_decathlon_login"))
         );
         decathlonConnectionButton.click();
@@ -62,7 +62,7 @@ public class Login {
         //Insert emailId
 
         //Thread.sleep(30000);
-        var userNameInput = (AndroidElement) new WebDriverWait(driver, 50).until(
+        AndroidElement userNameInput = (AndroidElement) new WebDriverWait(driver, 50).until(
                 ExpectedConditions.presenceOfElementLocated(
                         MobileBy.xpath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.webkit.WebView/android.webkit.WebView/android.view.View/android.view.View[2]/android.view.View[1]/android.view.View/android.view.View[2]/android.widget.EditText"))
         );
@@ -72,14 +72,14 @@ public class Login {
 
         //click on next button
         //Thread.sleep(3000);
-        var nextButton = (AndroidElement) new WebDriverWait(driver, 30).until(
+        AndroidElement nextButton = (AndroidElement) new WebDriverWait(driver, 30).until(
                 ExpectedConditions.presenceOfElementLocated(MobileBy.xpath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.webkit.WebView/android.webkit.WebView/android.view.View/android.view.View[2]/android.view.View[2]/android.widget.Button"))
         );
         nextButton.click();
 
         // insert password
         //Thread.sleep(3000);
-        var passwordInput = (AndroidElement) new WebDriverWait(driver, 30).until(
+        AndroidElement passwordInput = (AndroidElement) new WebDriverWait(driver, 30).until(
                 ExpectedConditions.presenceOfElementLocated(MobileBy.xpath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.webkit.WebView/android.webkit.WebView/android.view.View/android.view.View[2]/android.view.View[1]/android.view.View[3]/android.widget.EditText"))
         );
 
@@ -87,7 +87,7 @@ public class Login {
 
         //click on sign in button valider
         //Thread.sleep(3000);
-        var signinButton = (AndroidElement) new WebDriverWait(driver, 30).until(
+        AndroidElement signinButton = (AndroidElement) new WebDriverWait(driver, 30).until(
                 ExpectedConditions.presenceOfElementLocated(MobileBy.xpath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.webkit.WebView/android.webkit.WebView/android.view.View/android.view.View[2]/android.view.View[2]/android.widget.Button"))
         );
 
@@ -96,7 +96,7 @@ public class Login {
         //Check whether you are logged-in with username
         //Thread.sleep(1000);
         //@SuppressWarnings("unused")
-        var usernameProfile = (AndroidElement) new WebDriverWait(driver, 30).until(
+        AndroidElement usernameProfile = (AndroidElement) new WebDriverWait(driver, 30).until(
                 ExpectedConditions.presenceOfElementLocated(MobileBy.id("com.decathlon.quechuafinder:id/username_profile"))
         );
 
