@@ -11,16 +11,18 @@ import java.net.URL;
 
 public class AndroidDriverBuilder {
 
-    public static AndroidDriver<AndroidElement> buildDriver(String apkFile) throws MalformedURLException {
-        File app = new File("apk/" + apkFile);
+    //public static AndroidDriver<AndroidElement> buildDriver(String apkFile) throws MalformedURLException {
+    public static AndroidDriver<AndroidElement> buildDriver() throws MalformedURLException {
+        /*File app = new File("apk/" + apkFile);
         if (!app.exists()) {
             throw new IllegalStateException("the apk file was not found. Please add file " + apkFile + "in directory apk");
-        }
+        }*/
         DesiredCapabilities cap = new DesiredCapabilities();
         //here we set our android emulator
-        cap.setCapability(MobileCapabilityType.DEVICE_NAME, "PoojaEmulatorPixel5API32");
+        cap.setCapability(MobileCapabilityType.DEVICE_NAME, "PoojaEmulatorAppDebug");
         //here we set our capability type
-        cap.setCapability(MobileCapabilityType.APP, app.getAbsolutePath());
+        //cap.setCapability(MobileCapabilityType.APP, app.getAbsolutePath());
+        cap.setCapability(MobileCapabilityType.APP, System.getenv("BITRISE_APK_PATH"));
 
         cap.setCapability(MobileCapabilityType.AUTOMATION_NAME, "uiautomator2");
 
