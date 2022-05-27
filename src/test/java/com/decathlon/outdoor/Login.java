@@ -4,6 +4,7 @@ import io.appium.java_client.MobileBy;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.AndroidElement;
 import org.assertj.core.api.Assertions;
+import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -17,8 +18,8 @@ public class Login {
 
     @BeforeEach
     void setup() throws MalformedURLException {
-        String apkFile = ("Decathlonoutdoorandroid-2022051707.apk");
-        driver = AndroidDriverBuilder.buildDriver(apkFile);
+        //String apkFile = ("Decathlonoutdoorandroid-2022051707.apk");
+        driver = AndroidDriverBuilder.buildDriver();
     }
 
     @Test
@@ -102,10 +103,13 @@ public class Login {
         Assertions.assertThat(usernameProfile.isDisplayed()).isEqualTo(true);
 
         System.out.println("Login Successfully");
-
-        //Thread.sleep(3000);
-
-        driver.quit();
         
+    }
+
+    @AfterAll()
+    public void tearDown() {
+        if(null != driver) {
+            driver.quit();
+        }
     }
 }
