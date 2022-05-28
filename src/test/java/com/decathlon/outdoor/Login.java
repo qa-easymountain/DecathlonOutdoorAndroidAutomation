@@ -4,27 +4,24 @@ import io.appium.java_client.MobileBy;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.AndroidElement;
 import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
 import java.net.MalformedURLException;
-
+@TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class Login {
     private AndroidDriver<AndroidElement> driver;
 
     @BeforeEach
-    void setup() throws MalformedURLException {
-        //String apkFile = ("Decathlonoutdoorandroid-2022051707.apk");
+    public void setup() throws MalformedURLException {
+        String apkFile = ("Decathlonoutdoorandroid-2022051707.apk");
         driver = AndroidDriverBuilder.buildDriver();
     }
 
     @Test
     @DisplayName("it should be able to login")
-    void login() {
+    public void login() {
 
         AndroidElement acceptAndCloseButton = (AndroidElement) new WebDriverWait(driver, 30).until(
                 ExpectedConditions.elementToBeClickable(MobileBy.id("com.decathlon.quechuafinder:id/button_agree")));
