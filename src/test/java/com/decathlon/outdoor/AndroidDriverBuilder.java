@@ -14,7 +14,7 @@ public class AndroidDriverBuilder {
     //public static AndroidDriver<AndroidElement> buildDriver(String apkFile) throws MalformedURLException {
     public static AndroidDriver<AndroidElement> buildDriver(String apkFile) throws MalformedURLException {
         File app = new File("apk/" + apkFile);
-        if (!app.exists()) {
+        if (!app.exists() && System.getenv("BITRISE_APK_PATH") != null) {
             throw new IllegalStateException("the apk file was not found. Please add file " + apkFile + " in directory apk");
         }
         DesiredCapabilities cap = new DesiredCapabilities();
