@@ -12,23 +12,28 @@ import java.net.URL;
 public class AndroidDriverBuilder {
 
     //public static AndroidDriver<AndroidElement> buildDriver(String apkFile) throws MalformedURLException {
-    public static AndroidDriver<AndroidElement> buildDriver() throws MalformedURLException {
-        /*File app = new File("apk/" + apkFile);
+    public static AndroidDriver<AndroidElement> buildDriver(String apkFile) throws MalformedURLException {
+        File app = new File("apk/" + apkFile);
         if (!app.exists()) {
             throw new IllegalStateException("the apk file was not found. Please add file " + apkFile + "in directory apk");
-        }*/
+        }
         DesiredCapabilities cap = new DesiredCapabilities();
         //here we set our android emulator
         cap.setCapability(MobileCapabilityType.DEVICE_NAME, "PoojaEmulatorAppDebug");
         //here we set our capability type
-        //cap.setCapability(MobileCapabilityType.APP, app.getAbsolutePath());
-        cap.setCapability(MobileCapabilityType.APP, System.getenv("BITRISE_APK_PATH"));
+        if(System.getenv("BITRISE_APK_PATH") == null) {
+            cap.setCapability(MobileCapabilityType.APP, app.getAbsolutePath());
+        } else {
+            cap.setCapability(MobileCapabilityType.APP, System.getenv("BITRISE_APK_PATH"));
+        }
+
+
 
         cap.setCapability(MobileCapabilityType.AUTOMATION_NAME, "uiautomator2");
 
-        cap.setCapability("appPackage", ".com.decathlon.quechuafinder");
         cap.setCapability("platform", "Android");
-        cap.setCapability("appActivity", ".com.easymountain.quechua.ui.main.MainActivity");
+        cap.setCapability("appPackage", "com.decathlon.quechuafinder");
+        cap.setCapability("appActivity", "com.easymountain.quechua.ui.main.MainActivity");
         //cap.setCapability("noReset", "true");
         return new AndroidDriver<>(new URL("http://127.0.0.1:4723/wd/hub"), cap);
     }
