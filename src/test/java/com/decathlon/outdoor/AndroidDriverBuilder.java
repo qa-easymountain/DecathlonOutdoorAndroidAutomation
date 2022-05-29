@@ -15,12 +15,13 @@ public class AndroidDriverBuilder {
     public static AndroidDriver<AndroidElement> buildDriver(String apkFile) throws MalformedURLException {
         File app = new File("apk/" + apkFile);
         if (!app.exists()) {
-            throw new IllegalStateException("the apk file was not found. Please add file " + apkFile + "in directory apk");
+            throw new IllegalStateException("the apk file was not found. Please add file " + apkFile + " in directory apk");
         }
         DesiredCapabilities cap = new DesiredCapabilities();
         //here we set our android emulator
         cap.setCapability(MobileCapabilityType.DEVICE_NAME, "PoojaEmulatorAppDebug");
         //here we set our capability type
+        System.out.println(System.getenv("BITRISE_APK_PATH"));
         if(System.getenv("BITRISE_APK_PATH") == null) {
             cap.setCapability(MobileCapabilityType.APP, app.getAbsolutePath());
         } else {
