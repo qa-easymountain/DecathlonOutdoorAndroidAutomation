@@ -36,7 +36,7 @@ public class AndroidDriverBuilder {
 
         cap.setCapability("platform", "Android");
         cap.setCapability("appPackage", "com.decathlon.quechuafinder");
-        cap.setCapability("appActivity", "com.easymountain.quechua.ui.main.MainActivity");
+        cap.setCapability("appActivity", "com.easymountain.quechua.ui.main.MainActivityTest");
         //cap.setCapability("noReset", "true");
         return new AndroidDriver<>(new URL("http://127.0.0.1:4723/wd/hub"), cap);
     }
