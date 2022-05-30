@@ -10,8 +10,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 public class AndroidDriverBuilder {
-
-    //public static AndroidDriver<AndroidElement> buildDriver(String apkFile) throws MalformedURLException {
     public static AndroidDriver<AndroidElement> buildDriver(String apkFile) throws MalformedURLException {
         System.out.println(System.getenv("BITRISE_APK_PATH"));
 
@@ -35,10 +33,10 @@ public class AndroidDriverBuilder {
         cap.setCapability(MobileCapabilityType.AUTOMATION_NAME, "uiautomator2");
 
         cap.setCapability("platform", "Android");
-        //cap.setCapability("appPackage", "com.decathlon.quechuafinder");
-        cap.setCapability("appPackage", "com.decathlon.quechuafinder.alpha");
-       // cap.setCapability("appActivity", "com.easymountain.quechua.ui.main.MainActivityTest");
-        cap.setCapability("appActivity", "com.decathlon.quechuafinder.alpha.com.easymountain.quechua.ui.splash.SplashActivity");
+        cap.setCapability("appPackage", "com.decathlon.quechuafinder");
+       // cap.setCapability("appPackage", "com.decathlon.quechuafinder.alpha");
+       cap.setCapability("appActivity", "com.easymountain.quechua.ui.main.MainActivity");
+        //cap.setCapability("appActivity", "com.decathlon.quechuafinder.alpha.ui.splash.SplashActivity");
         //cap.setCapability("noReset", "true");
         return new AndroidDriver<>(new URL("http://127.0.0.1:4723/wd/hub"), cap);
     }
