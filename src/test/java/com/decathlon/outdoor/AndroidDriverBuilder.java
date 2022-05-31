@@ -10,9 +10,9 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 public class AndroidDriverBuilder {
-    public static AndroidDriver<AndroidElement> buildDriver(String apkFile) throws MalformedURLException {
+    public static AndroidDriver<AndroidElement> buildDriver() throws MalformedURLException {
         System.out.println(System.getenv("BITRISE_APK_PATH"));
-
+        String apkFile = ("Decathlonoutdoorandroid-2022051707.apk");
         File app = new File("apk/" + apkFile);
         if (!app.exists() && System.getenv("BITRISE_APK_PATH") != null) {
             throw new IllegalStateException("the apk file was not found. Please add file " + apkFile + " in directory apk");

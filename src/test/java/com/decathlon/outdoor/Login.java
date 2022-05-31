@@ -15,8 +15,7 @@ public class Login {
 
     @BeforeEach
     public void setup() throws MalformedURLException {
-        String localFile = ("Decathlonoutdoorandroid-2022051707.apk");
-        driver = AndroidDriverBuilder.buildDriver(localFile);
+        driver = AndroidDriverBuilder.buildDriver();
     }
 
     @Test
