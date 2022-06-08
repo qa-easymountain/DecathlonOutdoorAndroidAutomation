@@ -21,22 +21,18 @@ public class AndroidDriverBuilder {
         //here we set our android emulator
         cap.setCapability(MobileCapabilityType.DEVICE_NAME, "PoojaEmulatorAppDebug");
         //here we set our capability type
+        cap.setCapability(MobileCapabilityType.AUTOMATION_NAME, "uiautomator2");
+        cap.setCapability("platform", "Android");
 
         if(System.getenv("BITRISE_APK_PATH") == null) {
             cap.setCapability(MobileCapabilityType.APP, app.getAbsolutePath());
+            cap.setCapability("appPackage", "com.decathlon.quechuafinder");
+            cap.setCapability("appActivity", "com.easymountain.quechua.ui.main.MainActivity");
         } else {
             cap.setCapability(MobileCapabilityType.APP, System.getenv("BITRISE_APK_PATH"));
+            cap.setCapability("appPackage", "com.decathlon.quechuafinder.alpha");
+            cap.setCapability("appActivity", "com.easymountain.quechua.alpha.ui.main.MainActivity");
         }
-
-
-
-        cap.setCapability(MobileCapabilityType.AUTOMATION_NAME, "uiautomator2");
-
-        cap.setCapability("platform", "Android");
-        cap.setCapability("appPackage", "com.decathlon.quechuafinder");
-       // cap.setCapability("appPackage", "com.decathlon.quechuafinder.alpha");
-       cap.setCapability("appActivity", "com.easymountain.quechua.ui.main.MainActivity");
-        //cap.setCapability("appActivity", "com.decathlon.quechuafinder.alpha.ui.splash.SplashActivity");
 
         return new AndroidDriver<>(new URL("http://127.0.0.1:4723/wd/hub"), cap);
     }
