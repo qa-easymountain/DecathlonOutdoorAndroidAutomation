@@ -11,12 +11,18 @@ import java.net.URL;
 
 public class AndroidDriverBuilder {
     public static AndroidDriver<AndroidElement> buildDriver() throws MalformedURLException {
+        /* Below statement is used to print environment variable of the bitrise
+        apk path which is set after the android build in bitrise */
         System.out.println(System.getenv("BITRISE_APK_PATH"));
+        // Here we are setting the apk path for running the test locally
         String apkFile = ("Decathlonoutdoorandroid-2022051707.apk");
+        //Here we provide apk file to the app variable
         File app = new File("apk/" + apkFile);
+        // If the apk name is not present in the provided path show the exception message in terminal
         if (!app.exists() && System.getenv("BITRISE_APK_PATH") != null) {
             throw new IllegalStateException("the apk file was not found. Please add file " + apkFile + " in directory apk");
         }
+        //Instantiating the Desired capabilities inside the cap variable
         DesiredCapabilities cap = new DesiredCapabilities();
         //here we set our android emulator
         cap.setCapability(MobileCapabilityType.DEVICE_NAME, "PoojaEmulatorAppDebug");
