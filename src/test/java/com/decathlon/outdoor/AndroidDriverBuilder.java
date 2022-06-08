@@ -31,10 +31,11 @@ public class AndroidDriverBuilder {
         } else {
             cap.setCapability(MobileCapabilityType.APP, System.getenv("BITRISE_APK_PATH"));
             cap.setCapability("appPackage", "com.decathlon.quechuafinder.alpha");
-            cap.setCapability("appActivity", "com.easymountain.quechua.alpha.ui.main.MainActivity");
+            cap.setCapability("appActivity", "com.easymountain.quechua.ui.main.MainActivity");
+            //cap.setCapability("appActivity", "com.easymountain.quechua.ui.splash.SplashActivity");
         }
 
-        return new AndroidDriver<>(new URL("http://127.0.0.1:4723/wd/hub"), cap);
+        return new AndroidDriver<>(new URL("http://0.0.0.0:4723/wd/hub"), cap);
     }
 
     private AndroidDriverBuilder() {
