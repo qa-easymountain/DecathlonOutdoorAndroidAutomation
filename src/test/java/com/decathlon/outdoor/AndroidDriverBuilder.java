@@ -30,16 +30,16 @@ public class AndroidDriverBuilder {
         cap.setCapability(MobileCapabilityType.AUTOMATION_NAME, "uiautomator2");
         cap.setCapability("platform", "Android");
 
-        if(System.getenv("BITRISE_APK_PATH") == null) {
+        //if(System.getenv("BITRISE_APK_PATH") == null) {
             cap.setCapability(MobileCapabilityType.APP, app.getAbsolutePath());
             cap.setCapability("appPackage", "com.decathlon.quechuafinder");
             cap.setCapability("appActivity", "com.easymountain.quechua.ui.main.MainActivity");
-        } else {
+        /*} else {
             cap.setCapability(MobileCapabilityType.APP, System.getenv("BITRISE_APK_PATH"));
             cap.setCapability("appPackage", "com.decathlon.quechuafinder.alpha");
             cap.setCapability("appActivity", "com.easymountain.quechua.ui.main.MainActivity");
             //cap.setCapability("appActivity", "com.easymountain.quechua.ui.splash.SplashActivity");
-        }
+        } */
 
         return new AndroidDriver<>(new URL("http://0.0.0.0:4723/wd/hub"), cap);
     }
