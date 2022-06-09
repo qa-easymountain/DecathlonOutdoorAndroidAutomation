@@ -18,7 +18,6 @@ public class AndroidDriverBuilder {
         // Here we are setting the apk path for running the test locally
         String apkPath = "apk/" + "Decathlonoutdoorandroid-2022051707.apk";
         if (Objects.equals(System.getenv("BITRISE_APK_PATH"), "")) {
-            System.out.println("HERE !!!");
             apkPath = System.getenv("BITRISE_APK_PATH");
         }
 
