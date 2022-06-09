@@ -5,5 +5,5 @@ import org.junit.platform.suite.api.Suite;
 
 @Suite()
 @SelectClasses({Login.class})
-public class DecathlonOutdoorTestSuite {
+public class DecathlonOutdoorTest {
 }  	
