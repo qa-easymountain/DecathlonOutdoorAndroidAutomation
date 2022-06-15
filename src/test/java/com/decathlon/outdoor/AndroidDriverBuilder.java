@@ -37,6 +37,7 @@ public class AndroidDriverBuilder {
         cap.setCapability(MobileCapabilityType.AUTOMATION_NAME, "uiautomator2");
         cap.setCapability("platform", "Android");
 
+
         cap.setCapability(MobileCapabilityType.APP, app.getAbsolutePath());
         if(apkFileName == "app-alpha.apk") {
             cap.setCapability("appPackage", "com.decathlon.quechuafinder.alpha");
