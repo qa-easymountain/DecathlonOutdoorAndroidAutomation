@@ -5,6 +5,8 @@ import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.AndroidElement;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.*;
+import org.openqa.selenium.Keys;
+import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 
@@ -20,40 +22,53 @@ public class Login {
 
     @Test
     @DisplayName("it should be able to login")
-    public void login() {
+    public void login() throws InterruptedException {
 
+        String packageName = driver.getCurrentPackage();
+        
         AndroidElement acceptAndCloseButton = (AndroidElement) new WebDriverWait(driver, 30).until(
-                ExpectedConditions.elementToBeClickable(MobileBy.id("com.decathlon.quechuafinder:id/button_agree")));
+                ExpectedConditions.elementToBeClickable(MobileBy.id(packageName + ":id/button_agree")));
         acceptAndCloseButton.click();
         System.out.println("Cliqué sur Accepter & Fermer");
+        Thread.sleep(3000);
+        try {
+            AndroidElement newVersionAfterButton = driver.findElement(MobileBy.xpath("//android.widget.Button[@text='PLUS TARD']"));
+            newVersionAfterButton.click();
+        } catch (NoSuchElementException e) {
+            System.out.println("new version message dialog box failed to display");
+        }
 
         //Onboard and procees Button
         AndroidElement welcomeAgree = (AndroidElement) new WebDriverWait(driver, 30).until(
-                ExpectedConditions.elementToBeClickable(MobileBy.id("com.decathlon.quechuafinder:id/onboard_proceed_btn")));
+                ExpectedConditions.elementToBeClickable(MobileBy.id(packageName +":id/onboard_proceed_btn")));
         welcomeAgree.click();
 
         // select location next to you
         AndroidElement locationSelector = (AndroidElement) new WebDriverWait(driver,  30).until(
-                ExpectedConditions.elementToBeClickable(MobileBy.id("com.android.permissioncontroller:id/permission_location_accuracy_radio_fine")));
+                //ExpectedConditions.elementToBeClickable(MobileBy.id("com.android.permissioncontroller:id/permission_location_accuracy_radio_fine")));
+                ExpectedConditions.presenceOfElementLocated(MobileBy.xpath("//android.widget.RadioButton[@resource-id='com.android.permissioncontroller:id/permission_location_accuracy_radio_fine']")));
+
         locationSelector.click();
 
         // give permission while using application
-        AndroidElement locationPermissionAllowUsingThisAppButton = (AndroidElement) new WebDriverWait(driver, 300).until(
+        AndroidElement locationPermissionAllowUsingThisAppButton = (AndroidElement) new WebDriverWait(driver, 30).until(
                 ExpectedConditions.presenceOfElementLocated(MobileBy.id("com.android.permissioncontroller:id/permission_allow_foreground_only_button"))
         );
         locationPermissionAllowUsingThisAppButton.click();
 
         // GoTo Profile Page for Login (click on profile option)
-        //Thread.sleep(3000);
-        AndroidElement profilePageButton = (AndroidElement) new WebDriverWait(driver, 30).until(
-                ExpectedConditions.presenceOfElementLocated(MobileBy.id("com.decathlon.quechuafinder:id/profile_nav_menu"))
+        Thread.sleep(2000);
+        AndroidElement profilePageButton = (AndroidElement) new WebDriverWait(driver, 100).until(
+                //ExpectedConditions.presenceOfElementLocated(MobileBy.id(packageName + ":id/profile_nav_menu"))
+                ExpectedConditions.presenceOfElementLocated(MobileBy.xpath("//android.widget.FrameLayout[@content-desc='Profil']"))
         );
         profilePageButton.click();
 
         //click on connect to login page //Continue avec decathlon
         //Thread.sleep(3000);
         AndroidElement decathlonConnectionButton = (AndroidElement) new WebDriverWait(driver, 30).until(
-                ExpectedConditions.presenceOfElementLocated(MobileBy.id("com.decathlon.quechuafinder:id/btn_decathlon_login"))
+                ExpectedConditions.presenceOfElementLocated(MobileBy.xpath("//android.view.ViewGroup[@resource-id='" + packageName + ":id/btn_decathlon_login']"))
+                
         );
         decathlonConnectionButton.click();
 
@@ -92,8 +107,9 @@ public class Login {
         signinButton.click();
 
         //Check whether you are logged-in with username
+        Thread.sleep(3000);
         AndroidElement usernameProfile = (AndroidElement) new WebDriverWait(driver, 30).until(
-                ExpectedConditions.presenceOfElementLocated(MobileBy.id("com.decathlon.quechuafinder:id/username_profile"))
+                ExpectedConditions.presenceOfElementLocated(MobileBy.id(packageName + ":id/username_profile"))
         );
 
         Assertions.assertThat(usernameProfile.isDisplayed()).isEqualTo(true);
