@@ -3,6 +3,7 @@ package com.decathlon.outdoor;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.AndroidElement;
 import io.appium.java_client.remote.MobileCapabilityType;
+import org.openqa.selenium.remote.CapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
 import java.io.File;
@@ -16,7 +17,8 @@ public class AndroidDriverBuilder {
         apk path which is set after the android build in bitrise */
         System.out.println(System.getenv("BITRISE_APK_PATH"));
         // Here we are setting the apk path for running the test locally
-        String apkPath = "apk/" + "Decathlonoutdoorandroid-2022051707.apk";
+        String apkFileName = "release-2022060714.apk";
+        String apkPath = "apk/" + apkFileName;
         if (Objects.equals(System.getenv("BITRISE_APK_PATH"), "")) {
             apkPath = System.getenv("BITRISE_APK_PATH");
         }
@@ -35,17 +37,16 @@ public class AndroidDriverBuilder {
         cap.setCapability(MobileCapabilityType.AUTOMATION_NAME, "uiautomator2");
         cap.setCapability("platform", "Android");
 
-        //if(System.getenv("BITRISE_APK_PATH") == null) {
-            cap.setCapability(MobileCapabilityType.APP, app.getAbsolutePath());
-            cap.setCapability("appPackage", "com.decathlon.quechuafinder");
-            cap.setCapability("appActivity", "com.easymountain.quechua.ui.main.MainActivity");
-        /*} else {
-            cap.setCapability(MobileCapabilityType.APP, System.getenv("BITRISE_APK_PATH"));
-            cap.setCapability("appPackage", "com.decathlon.quechuafinder.alpha");
-            cap.setCapability("appActivity", "com.easymountain.quechua.ui.main.MainActivity");
-            //cap.setCapability("appActivity", "com.easymountain.quechua.ui.splash.SplashActivity");
-        } */
 
+        cap.setCapability(MobileCapabilityType.APP, app.getAbsolutePath());
+        if(apkFileName == "app-alpha.apk") {
+            cap.setCapability("appPackage", "com.decathlon.quechuafinder.alpha");
+        } else if(apkFileName == "app-debug.apk") {
+            cap.setCapability("appPackage", "com.decathlon.quechuafinder.debug");
+        } else {
+            cap.setCapability("appPackage", "com.decathlon.quechuafinder");
+        }
+        cap.setCapability("appActivity", "com.easymountain.quechua.ui.main.MainActivity");
         return new AndroidDriver<>(new URL("http://0.0.0.0:4723/wd/hub"), cap);
     }
 
