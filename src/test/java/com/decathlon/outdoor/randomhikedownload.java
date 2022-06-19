@@ -78,8 +78,7 @@ public class randomhikedownload {
     
                 //===================== Swipe for beta test ===================
                 Thread.sleep(3000);
-                //WebElement panel = driver.findElement(By.xpath("hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[1]/android.view.ViewGroup/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.RelativeLayout[2]"));
-                WebElement panel = driver.findElement(By.xpath("//android.view.ViewGroup[@resource-id='com.decathlon.quechuafinder:id/white_container_info_hike']"));
+                WebElement panel = driver.findElement(By.xpath("hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[1]/android.view.ViewGroup/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.RelativeLayout[2]"));
 
                 Random dice = new Random();
     
@@ -148,7 +147,7 @@ public class randomhikedownload {
             AndroidElement passwordInput = (AndroidElement) new WebDriverWait(driver, 30).until(
                     ExpectedConditions.presenceOfElementLocated(MobileBy.xpath("//android.widget.EditText[@resource-id='input-password']"))
             );
-            //passwordInput.sendKeys("4SG!!7xG");
+            passwordInput.sendKeys("4SG!!7xG");
             //passwordInput.sendKeys("Pooja123");
 
             //click on sign in button
