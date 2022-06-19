@@ -133,6 +133,7 @@ public class randomhikedownload {
             );
             userNameInput.click();
             userNameInput.sendKeys("test.decathlonoutdoor@gmail.com");
+            //userNameInput.sendKeys("pooja@easy-mountain.com");
 
 
             //click on next button
@@ -147,8 +148,9 @@ public class randomhikedownload {
             AndroidElement passwordInput = (AndroidElement) new WebDriverWait(driver, 30).until(
                     ExpectedConditions.presenceOfElementLocated(MobileBy.xpath("//android.widget.EditText[@resource-id='input-password']"))
             );
-            passwordInput.sendKeys("4SG!!7xG");
-    
+            //passwordInput.sendKeys("4SG!!7xG");
+            //passwordInput.sendKeys("Pooja123");
+
             //click on sign in button
             Thread.sleep(1000);
             AndroidElement signinButton = (AndroidElement) new WebDriverWait(driver, 30).until(

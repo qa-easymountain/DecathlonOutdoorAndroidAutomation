@@ -17,7 +17,7 @@ public class AndroidDriverBuilder {
         apk path which is set after the android build in bitrise */
         System.out.println(System.getenv("BITRISE_APK_PATH"));
         // Here we are setting the apk path for running the test locally
-        String apkFileName = "release-2022060714.apk";
+        String apkFileName = "Decathlonoutdoorandroid-2022051707.apk";
         String apkPath = "apk/" + apkFileName;
         if (Objects.equals(System.getenv("BITRISE_APK_PATH"), "")) {
             apkPath = System.getenv("BITRISE_APK_PATH");
