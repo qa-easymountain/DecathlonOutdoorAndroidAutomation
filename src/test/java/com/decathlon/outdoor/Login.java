@@ -1,42 +1,34 @@
 package com.decathlon.outdoor;
 
+import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileBy;
-import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.AndroidElement;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.*;
-import org.openqa.selenium.Keys;
-import org.openqa.selenium.NoSuchElementException;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
-
 import java.net.MalformedURLException;
+
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class Login {
-    private AndroidDriver<AndroidElement> driver;
+    private AppiumDriver<AndroidElement> driver;
 
     @BeforeEach
     public void setup() throws MalformedURLException {
-        driver = AndroidDriverBuilder.buildDriver();
+        driver = BasicSauceLabsConfiguration.setup();
     }
 
     @Test
     @DisplayName("it should be able to login")
-    public void login() throws InterruptedException {
+    public void userLogin() throws InterruptedException {
+        String packageName = driver.getCapabilities().getCapability("appPackage").toString();
+        //String packageName = "com.decathlon.quechuafinder";
+        //System.out.println(packageName);
 
-        String packageName = driver.getCurrentPackage();
-        
         AndroidElement acceptAndCloseButton = (AndroidElement) new WebDriverWait(driver, 30).until(
                 ExpectedConditions.elementToBeClickable(MobileBy.id(packageName + ":id/button_agree")));
         acceptAndCloseButton.click();
         System.out.println("Cliqué sur Accepter & Fermer");
-        Thread.sleep(3000);
-        try {
-            AndroidElement newVersionAfterButton = driver.findElement(MobileBy.xpath("//android.widget.Button[@text='PLUS TARD']"));
-            newVersionAfterButton.click();
-        } catch (NoSuchElementException e) {
-            System.out.println("new version message dialog box failed to display");
-        }
 
         //Onboard and procees Button
         AndroidElement welcomeAgree = (AndroidElement) new WebDriverWait(driver, 30).until(
@@ -58,7 +50,7 @@ public class Login {
         locationPermissionAllowUsingThisAppButton.click();
 
         // GoTo Profile Page for Login (click on profile option)
-        Thread.sleep(2000);
+        //Thread.sleep(4000);
         AndroidElement profilePageButton = (AndroidElement) new WebDriverWait(driver, 100).until(
                 //ExpectedConditions.presenceOfElementLocated(MobileBy.id(packageName + ":id/profile_nav_menu"))
                 ExpectedConditions.presenceOfElementLocated(MobileBy.xpath("//android.widget.FrameLayout[@content-desc='Profil']"))
@@ -69,7 +61,6 @@ public class Login {
         //Thread.sleep(3000);
         AndroidElement decathlonConnectionButton = (AndroidElement) new WebDriverWait(driver, 30).until(
                 ExpectedConditions.presenceOfElementLocated(MobileBy.xpath("//android.view.ViewGroup[@resource-id='" + packageName + ":id/btn_decathlon_login']"))
-                
         );
         decathlonConnectionButton.click();
 
@@ -83,7 +74,7 @@ public class Login {
         userNameInput.click();
         userNameInput.sendKeys("test.decathlonoutdoor@gmail.com");
 
-
+          driver.hideKeyboard();
         //click on next button
         //Thread.sleep(3000);
         AndroidElement nextButton = (AndroidElement) new WebDriverWait(driver, 30).until(
@@ -97,13 +88,13 @@ public class Login {
                 ExpectedConditions.presenceOfElementLocated(MobileBy.xpath("//android.widget.EditText[@resource-id='input-password']"))
         );
         passwordInput.sendKeys("4SG!!7xG");
+        driver.hideKeyboard();
 
         //click on sign in button valider
         //Thread.sleep(3000);
         AndroidElement signinButton = (AndroidElement) new WebDriverWait(driver, 30).until(
                 ExpectedConditions.presenceOfElementLocated(MobileBy.xpath("//android.widget.Button[@resource-id='signin-button']"))
         );
-
 
         signinButton.click();
 
@@ -112,17 +103,31 @@ public class Login {
         AndroidElement usernameProfile = (AndroidElement) new WebDriverWait(driver, 30).until(
                 ExpectedConditions.presenceOfElementLocated(MobileBy.id(packageName + ":id/username_profile"))
         );
-
         Assertions.assertThat(usernameProfile.isDisplayed()).isEqualTo(true);
-
         System.out.println("Login Successfully");
-        
+
+        Thread.sleep(5000);
+        AndroidElement settingsButton = (AndroidElement) new WebDriverWait(driver, 30).until(
+                ExpectedConditions.presenceOfElementLocated(MobileBy.id(packageName + ":id/settings"))
+        );
+        settingsButton.click();
+
+        Thread.sleep(3000);
+        AndroidElement logoutButton = (AndroidElement) new WebDriverWait(driver, 30).until(
+                ExpectedConditions.presenceOfElementLocated(MobileBy.id(packageName + ":id/disconnect_btn"))
+        );
+        logoutButton.click();
+        System.out.println("Logout after Successful login");
+
+        Thread.sleep(5000);
+
     }
 
-    @AfterAll()
+  /*  @AfterAll()
     public void tearDown() {
         if(null != driver) {
+            System.out.println("quiting the driver");
             driver.quit();
         }
-    }
+    }*/
 }
