@@ -60,7 +60,8 @@ public class Login {
         //click on connect to login page //Continue avec decathlon
         //Thread.sleep(3000);
         AndroidElement decathlonConnectionButton = (AndroidElement) new WebDriverWait(driver, 30).until(
-                ExpectedConditions.presenceOfElementLocated(MobileBy.xpath("//android.view.ViewGroup[@resource-id='" + packageName + ":id/btn_decathlon_login']"))
+                //ExpectedConditions.presenceOfElementLocated(MobileBy.xpath("//android.view.ViewGroup[@resource-id='" + packageName + ":id/btn_decathlon_login']"))
+                ExpectedConditions.presenceOfElementLocated(MobileBy.id("com.decathlon.quechuafinder:id/btn_decathlon_login"))
         );
         decathlonConnectionButton.click();
 
@@ -69,7 +70,7 @@ public class Login {
         //Thread.sleep(30000);
         AndroidElement userNameInput = (AndroidElement) new WebDriverWait(driver, 50).until(
                 //Formula of xpath=> .xpath("//Class name[@attribute name='value']")
-                ExpectedConditions.presenceOfElementLocated(MobileBy.xpath("//android.widget.EditText[@resource-id='input-email']"))
+                ExpectedConditions.presenceOfElementLocated(MobileBy.xpath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[1]/android.widget.FrameLayout[2]/android.webkit.WebView/android.view.View/android.view.View[2]/android.view.View[3]/android.view.View/android.view.View[2]/android.widget.EditText"))
         );
         userNameInput.click();
         userNameInput.sendKeys("test.decathlonoutdoor@gmail.com");
@@ -78,24 +79,31 @@ public class Login {
         //click on next button
         //Thread.sleep(3000);
         AndroidElement nextButton = (AndroidElement) new WebDriverWait(driver, 30).until(
-                ExpectedConditions.presenceOfElementLocated(MobileBy.xpath("//android.widget.Button[@resource-id='lookup-btn']"))
+                ExpectedConditions.presenceOfElementLocated(MobileBy.xpath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[1]/android.widget.FrameLayout[2]/android.webkit.WebView/android.view.View/android.view.View[2]/android.view.View[4]/android.widget.Button"))
         );
         nextButton.click();
 
         // insert password
         //Thread.sleep(3000);
         AndroidElement passwordInput = (AndroidElement) new WebDriverWait(driver, 30).until(
-                ExpectedConditions.presenceOfElementLocated(MobileBy.xpath("//android.widget.EditText[@resource-id='input-password']"))
+                ExpectedConditions.presenceOfElementLocated(MobileBy.xpath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[1]/android.widget.FrameLayout[2]/android.webkit.WebView/android.view.View/android.view.View[2]/android.view.View[3]/android.view.View[3]/android.widget.EditText"))
         );
         passwordInput.sendKeys("4SG!!7xG");
 
         //click on sign in button valider
         //Thread.sleep(3000);
         AndroidElement signinButton = (AndroidElement) new WebDriverWait(driver, 30).until(
-                ExpectedConditions.presenceOfElementLocated(MobileBy.xpath("//android.widget.Button[@resource-id='signin-button']"))
+                ExpectedConditions.presenceOfElementLocated(MobileBy.xpath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[1]/android.widget.FrameLayout[2]/android.webkit.WebView/android.view.View/android.view.View[2]/android.view.View[4]/android.widget.Button"))
         );
 
         signinButton.click();
+
+        // Tap on cross mark
+        AndroidElement closepopup = (AndroidElement) new WebDriverWait(driver, 30).until(
+                ExpectedConditions.presenceOfElementLocated(MobileBy.xpath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.RelativeLayout/android.view.ViewGroup/android.widget.Button"))
+        );
+
+        closepopup.click();
 
         //Check whether you are logged-in with username
         Thread.sleep(3000);
@@ -105,7 +113,7 @@ public class Login {
         Assertions.assertThat(usernameProfile.isDisplayed()).isEqualTo(true);
         System.out.println("Login Successfully");
 
-        Thread.sleep(5000);
+        /*Thread.sleep(5000);
         AndroidElement settingsButton = (AndroidElement) new WebDriverWait(driver, 30).until(
                 ExpectedConditions.presenceOfElementLocated(MobileBy.id(packageName + ":id/settings"))
         );
@@ -118,15 +126,8 @@ public class Login {
         logoutButton.click();
         System.out.println("Logout after Successful login");
 
-        Thread.sleep(5000);
+        Thread.sleep(5000);*/
 
     }
 
-    @AfterAll()
-    public void tearDown() {
-        if(null != driver) {
-            System.out.println("quiting the driver");
-            driver.quit();
-        }
-    }
 }
