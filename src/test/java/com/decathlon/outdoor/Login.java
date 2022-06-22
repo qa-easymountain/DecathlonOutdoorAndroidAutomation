@@ -1,29 +1,29 @@
 package com.decathlon.outdoor;
 
+import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileBy;
-import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.AndroidElement;
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.*;
-import org.openqa.selenium.NoSuchElementException;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import java.net.MalformedURLException;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class Login {
-    private AndroidDriver<AndroidElement> driver;
+    private AppiumDriver<AndroidElement> driver;
 
     @BeforeEach
     public void setup() throws MalformedURLException {
-        driver = AndroidDriverBuilder.buildDriver();
+        driver = BasicSauceLabsConfiguration.setup();
     }
 
     @Test
     @DisplayName("it should be able to login")
     public void userLogin() throws InterruptedException {
-        String packageName = driver.getCurrentPackage();
+        String packageName = driver.getCapabilities().getCapability("appPackage").toString();
+        //String packageName = "com.decathlon.quechuafinder";
+        //System.out.println(packageName);
 
         AndroidElement acceptAndCloseButton = (AndroidElement) new WebDriverWait(driver, 30).until(
                 ExpectedConditions.elementToBeClickable(MobileBy.id(packageName + ":id/button_agree")));
@@ -74,7 +74,7 @@ public class Login {
         userNameInput.click();
         userNameInput.sendKeys("test.decathlonoutdoor@gmail.com");
 
-
+          driver.hideKeyboard();
         //click on next button
         //Thread.sleep(3000);
         AndroidElement nextButton = (AndroidElement) new WebDriverWait(driver, 30).until(
@@ -88,6 +88,7 @@ public class Login {
                 ExpectedConditions.presenceOfElementLocated(MobileBy.xpath("//android.widget.EditText[@resource-id='input-password']"))
         );
         passwordInput.sendKeys("4SG!!7xG");
+        driver.hideKeyboard();
 
         //click on sign in button valider
         //Thread.sleep(3000);
@@ -122,11 +123,11 @@ public class Login {
 
     }
 
-    @AfterAll()
+  /*  @AfterAll()
     public void tearDown() {
         if(null != driver) {
             System.out.println("quiting the driver");
             driver.quit();
         }
-    }
+    }*/
 }
