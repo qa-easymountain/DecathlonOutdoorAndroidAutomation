@@ -7,6 +7,8 @@ import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.io.IOException;
 import java.net.MalformedURLException;
 import java.util.Objects;
 
@@ -15,7 +17,7 @@ public class Login {
     private AppiumDriver<AndroidElement> driver;
 
     @BeforeEach
-    public void setup() throws MalformedURLException {
+    public void setup() throws IOException {
      //   driver = BasicSauceLabsConfiguration.setup();
         driver = AndroidDriverBuilder.buildDriver("Login");
 
