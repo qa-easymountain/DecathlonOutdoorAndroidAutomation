@@ -1,33 +1,33 @@
 package com.decathlon.outdoor;
 
 
+import io.appium.java_client.android.AndroidDriver;
+import io.appium.java_client.android.AndroidElement;
 import org.apache.http.HttpEntity;
+import org.apache.http.HttpHost;
 import org.apache.http.HttpResponse;
 import org.apache.http.auth.AuthScope;
 import org.apache.http.auth.UsernamePasswordCredentials;
+import org.apache.http.client.AuthCache;
 import org.apache.http.client.CredentialsProvider;
 import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpPost;
+import org.apache.http.client.methods.HttpUriRequest;
+import org.apache.http.client.methods.RequestBuilder;
+import org.apache.http.client.protocol.HttpClientContext;
+import org.apache.http.entity.mime.HttpMultipartMode;
 import org.apache.http.entity.mime.MultipartEntityBuilder;
-import org.apache.http.entity.mime.content.FileBody;
+import org.apache.http.impl.auth.BasicScheme;
+import org.apache.http.impl.client.BasicAuthCache;
 import org.apache.http.impl.client.BasicCredentialsProvider;
 import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.util.EntityUtils;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-
-
-import io.appium.java_client.android.AndroidDriver;
-import io.appium.java_client.android.AndroidElement;
-import io.appium.java_client.remote.MobileCapabilityType;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.IOException;
-import java.net.MalformedURLException;
+import java.io.*;
 import java.net.URL;
 import java.util.Iterator;
 import java.util.Map;
@@ -126,18 +126,26 @@ public class AndroidDriverBuilder {
                 * - Upload to BrowserStack
                 * - Able to use for tests
                 */
-                HttpEntity entity = MultipartEntityBuilder.create().addPart("file", new FileBody(app)).build();
-                CredentialsProvider provider = new BasicCredentialsProvider();
-                UsernamePasswordCredentials credentials
-                        = new UsernamePasswordCredentials(config.get("username").toString(), config.get("access_key").toString());
-                provider.setCredentials(AuthScope.ANY, credentials);
+                HttpEntity entity = MultipartEntityBuilder.create()
+                        .setMode(HttpMultipartMode.BROWSER_COMPATIBLE)
+                        .addBinaryBody("file", app)
+                        .build();
 
-                HttpPost request = new HttpPost("https://api-cloud.browserstack.com/app-automate/upload");
-                request.setEntity(entity);
+                HttpUriRequest request = RequestBuilder.post("https://api-cloud.browserstack.com/app-automate/upload")
+                        .setEntity(entity).build();
 
-                HttpClient client = HttpClientBuilder.create().setDefaultCredentialsProvider(provider).build();
-                HttpResponse response = client.execute(request);
+                HttpResponse response = HttpClientBuilder.create().build()
+                        .execute(request, buildRequestContext(config));
 
+                int statusCode = response.getStatusLine().getStatusCode();
+                if (statusCode >= 400) {
+                    throw new IOException("request to browserstack API failed with response code " + statusCode
+                            + " and reason "+ response.getStatusLine().getReasonPhrase());
+                }
+                String responseAsString = EntityUtils.toString(response.getEntity());
+                JSONObject responseObject = (JSONObject) parser.parse(responseAsString);
+                String appUrl = (String) responseObject.get("app_url");
+                capabilities.setCapability("app", appUrl);
             }
 
 
@@ -151,5 +159,21 @@ public class AndroidDriverBuilder {
         }
         return driver;
         //return new AndroidDriver<>(new URL("http://0.0.0.0:4723/wd/hub"), cap);
+    }
+
+    private static HttpClientContext buildRequestContext(JSONObject config) {
+        CredentialsProvider credentialsProvider = new BasicCredentialsProvider();
+        UsernamePasswordCredentials credentials
+                = new UsernamePasswordCredentials(config.get("username").toString(), config.get("access_key").toString());
+        credentialsProvider.setCredentials(AuthScope.ANY, credentials);
+
+        AuthCache authCache = new BasicAuthCache();
+        HttpHost targetHost = HttpHost.create("https://api-cloud.browserstack.com");
+        authCache.put(targetHost, new BasicScheme());
+
+        HttpClientContext context = HttpClientContext.create();
+        context.setCredentialsProvider(credentialsProvider);
+        context.setAuthCache(authCache);
+        return context;
     }
 }
