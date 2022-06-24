@@ -123,11 +123,11 @@ public class Login {
 
     }
 
-  /*  @AfterAll()
+    @AfterAll
     public void tearDown() {
-        if(null != driver) {
-            System.out.println("quiting the driver");
+        System.out.println(" After All TearDown");
+        if(driver != null) {
             driver.quit();
         }
-    }*/
+    }
 }
