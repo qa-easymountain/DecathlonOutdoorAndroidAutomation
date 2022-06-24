@@ -8,6 +8,7 @@ import org.junit.jupiter.api.*;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
 import java.net.MalformedURLException;
+import java.util.Objects;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class Login {
@@ -15,7 +16,10 @@ public class Login {
 
     @BeforeEach
     public void setup() throws MalformedURLException {
-        driver = BasicSauceLabsConfiguration.setup();
+     //   driver = BasicSauceLabsConfiguration.setup();
+        driver = AndroidDriverBuilder.buildDriver("Login");
+
+
     }
 
     @Test
@@ -35,19 +39,30 @@ public class Login {
                 ExpectedConditions.elementToBeClickable(MobileBy.id(packageName +":id/onboard_proceed_btn")));
         welcomeAgree.click();
 
-        // select location next to you
-        AndroidElement locationSelector = (AndroidElement) new WebDriverWait(driver,  30).until(
-                //ExpectedConditions.elementToBeClickable(MobileBy.id("com.android.permissioncontroller:id/permission_location_accuracy_radio_fine")));
-                ExpectedConditions.presenceOfElementLocated(MobileBy.xpath("//android.widget.RadioButton[@resource-id='com.android.permissioncontroller:id/permission_location_accuracy_radio_fine']")));
+        Object OsVersion  = driver.getCapabilities().getCapability("os_version");
 
-        locationSelector.click();
+        if(Objects.equals(OsVersion.toString(), "12.0")) {
+            // select location next to you
+            AndroidElement locationSelector = (AndroidElement) new WebDriverWait(driver, 30).until(
+                    //ExpectedConditions.elementToBeClickable(MobileBy.id("com.android.permissioncontroller:id/permission_location_accuracy_radio_fine")));
+                    ExpectedConditions.presenceOfElementLocated(MobileBy.xpath("//android.widget.RadioButton[@resource-id='com.android.permissioncontroller:id/permission_location_accuracy_radio_fine']")));
 
-        // give permission while using application
-        AndroidElement locationPermissionAllowUsingThisAppButton = (AndroidElement) new WebDriverWait(driver, 30).until(
-                //ExpectedConditions.presenceOfElementLocated(MobileBy.id("com.android.permissioncontroller:id/permission_allow_foreground_only_button"))
-                ExpectedConditions.presenceOfElementLocated(MobileBy.id("com.android.permissioncontroller:id/permission_allow_foreground_only_button"))
-        );
-        locationPermissionAllowUsingThisAppButton.click();
+            locationSelector.click();
+
+            // give permission while using application
+            AndroidElement locationPermissionAllowUsingThisAppButton = (AndroidElement) new WebDriverWait(driver, 30).until(
+                    //ExpectedConditions.presenceOfElementLocated(MobileBy.id("com.android.permissioncontroller:id/permission_allow_foreground_only_button"))
+                    ExpectedConditions.presenceOfElementLocated(MobileBy.id("com.android.permissioncontroller:id/permission_allow_foreground_only_button"))
+            );
+            locationPermissionAllowUsingThisAppButton.click();
+
+        } else if (Objects.equals(OsVersion.toString(), "11.0")) {
+            AndroidElement locationSelector = (AndroidElement) new WebDriverWait(driver, 30).until(
+                    ExpectedConditions.presenceOfElementLocated(MobileBy.id("com.android.permissioncontroller:id/permission_allow_foreground_only_button")));
+            locationSelector.click();
+        }
+
+
 
         // GoTo Profile Page for Login (click on profile option)
         //Thread.sleep(4000);
@@ -98,8 +113,21 @@ public class Login {
 
         signinButton.click();
 
+
+
         //Check whether you are logged-in with username
         Thread.sleep(3000);
+
+        try {
+            AndroidElement batchEventCloseButton = (AndroidElement) new WebDriverWait(driver, 10).until(
+                    ExpectedConditions.presenceOfElementLocated(MobileBy.id(packageName + ":id/com_batchsdk_messaging_close_button"))
+            );
+            System.out.println("Batch special event button is present");
+            batchEventCloseButton.click();
+        } catch (Exception e ) {
+            System.out.println("Batch special event button was not present");
+        }
+
         AndroidElement usernameProfile = (AndroidElement) new WebDriverWait(driver, 30).until(
                 ExpectedConditions.presenceOfElementLocated(MobileBy.id(packageName + ":id/username_profile"))
         );
@@ -107,6 +135,8 @@ public class Login {
         System.out.println("Login Successfully");
 
         Thread.sleep(5000);
+
+
         AndroidElement settingsButton = (AndroidElement) new WebDriverWait(driver, 30).until(
                 ExpectedConditions.presenceOfElementLocated(MobileBy.id(packageName + ":id/settings"))
         );
@@ -123,11 +153,11 @@ public class Login {
 
     }
 
-  /*  @AfterAll()
+    @AfterEach
     public void tearDown() {
-        if(null != driver) {
-            System.out.println("quiting the driver");
-            driver.quit();
-        }
-    }*/
+        // Invoke driver.quit() to indicate that the test is completed.
+        // Otherwise, it will appear as timed out on BrowserStack.
+        driver.quit();
+    }
+
 }
