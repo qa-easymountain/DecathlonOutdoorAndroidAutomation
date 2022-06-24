@@ -1,0 +1,22 @@
+{
+  "server": "hub-cloud.browserstack.com",
+  "username": "thibault_VDYvQE",
+  "access_key": "zqkXz1VLpw7Bbm6V2oBc",
+  "capabilities": {
+    "project": "First Junit5 Android Project",
+    "build": "Junit5 Android First",
+    "name": "first_test",
+    "browserstack.debug": true,
+    "app": "bs://3a1b606705756131c952051ade2666d44fd865a6"
+  },
+  "environments": [
+    {
+      "device": "Google Pixel 6",
+      "os_version": "12.0"
+    },
+    {
+      "device": "Google Pixel 4",
+      "os_version": "11.0"
+    }
+  ]
+}
