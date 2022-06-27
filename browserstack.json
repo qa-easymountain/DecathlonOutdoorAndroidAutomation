@@ -1,13 +1,13 @@
 {
   "server": "hub-cloud.browserstack.com",
-  "username": "thibault_VDYvQE",
-  "access_key": "zqkXz1VLpw7Bbm6V2oBc",
+  "username": "pooja425",
+  "access_key": "mxBbHyocHHq8daYhLYBT",
   "capabilities": {
     "project": "First Junit5 Android Project",
     "build": "Junit5 Android First",
     "name": "first_test",
     "browserstack.debug": true,
-    "app": "bs://3a1b606705756131c952051ade2666d44fd865a6"
+    "app": "bs://dc4b02200484eb7fa917510394bfd4ae4da65f0c"
   },
   "environments": [
     {

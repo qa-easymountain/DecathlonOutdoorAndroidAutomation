@@ -19,7 +19,8 @@ public class Login {
     @BeforeEach
     public void setup() throws IOException {
      //   driver = BasicSauceLabsConfiguration.setup();
-        driver = AndroidDriverBuilder.buildDriver("Login");
+        driver = BrowserstackBuilder.buildDriver("Login");
+        //driver = AndroidDriverBuilder.buildDriver();
 
 
     }
