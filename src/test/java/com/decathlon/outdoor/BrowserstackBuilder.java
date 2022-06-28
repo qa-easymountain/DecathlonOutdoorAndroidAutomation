@@ -1,6 +1,7 @@
 package com.decathlon.outdoor;
 
 
+import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.android.AndroidElement;
 import org.apache.http.HttpEntity;
@@ -38,14 +39,14 @@ import java.util.Objects;
 public class BrowserstackBuilder {
 
     public static JSONObject config;
-    public AndroidDriver<AndroidElement> driver;
+    public AppiumDriver<AndroidElement> driver;
     public DesiredCapabilities capabilities;
 
     private BrowserstackBuilder() {
         // utility class
     }
 
-    public static AndroidDriver<AndroidElement> buildDriver(String testName) throws IOException {
+    public static AppiumDriver<AndroidElement> buildDriver(String testName) throws IOException {
         // Here we are setting the apk path for running the test locally
 
 
