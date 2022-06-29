@@ -1,29 +1,29 @@
 package com.decathlon.outdoor;
 
-        import io.appium.java_client.MobileBy;
-        import io.appium.java_client.android.AndroidDriver;
-        import io.appium.java_client.android.AndroidElement;
-        import org.assertj.core.api.Assertions;
-        import org.junit.jupiter.api.*;
-        import org.openqa.selenium.NoSuchElementException;
-        import org.openqa.selenium.WebElement;
-        import org.openqa.selenium.support.ui.ExpectedConditions;
-        import org.openqa.selenium.support.ui.WebDriverWait;
-        import java.net.MalformedURLException;
+    import io.appium.java_client.AppiumDriver;
+    import io.appium.java_client.MobileBy;
+    import io.appium.java_client.android.AndroidElement;
+    import org.assertj.core.api.Assertions;
+    import org.junit.jupiter.api.*;
+    import org.openqa.selenium.support.ui.ExpectedConditions;
+    import org.openqa.selenium.support.ui.WebDriverWait;
+    import java.io.IOException;
+    import java.util.Objects;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class socialmediaiconlogin {
-    private AndroidDriver<AndroidElement> driver;
+public class SocialMediaFacebookLogin {
+    private AppiumDriver<AndroidElement> driver;
 
     @BeforeEach
-    public void setup() throws MalformedURLException {
+    public void setup() throws IOException {
+        //driver = BrowserstackBuilder.buildDriver("SocialMediaFacebookLogin");
         driver = AndroidDriverBuilder.buildDriver();
     }
 
     @Test
     @DisplayName("it should be able to login")
     public void userLogin() throws InterruptedException {
-        String packageName = driver.getCurrentPackage();
+        String packageName = driver.getCapabilities().getCapability("appPackage").toString();
 
         AndroidElement acceptAndCloseButton = (AndroidElement) new WebDriverWait(driver, 30).until(
                 ExpectedConditions.elementToBeClickable(MobileBy.id(packageName + ":id/button_agree")));
@@ -35,6 +35,9 @@ public class socialmediaiconlogin {
                 ExpectedConditions.elementToBeClickable(MobileBy.id(packageName +":id/onboard_proceed_btn")));
         welcomeAgree.click();
 
+        Object OsVersion  = driver.getCapabilities().getCapability("os_version");
+
+        if(Objects.equals(OsVersion.toString(), "12.0")) {
         // select location next to you
         AndroidElement locationSelector = (AndroidElement) new WebDriverWait(driver,  30).until(
                 //ExpectedConditions.elementToBeClickable(MobileBy.id("com.android.permissioncontroller:id/permission_location_accuracy_radio_fine")));
@@ -48,6 +51,12 @@ public class socialmediaiconlogin {
                 ExpectedConditions.presenceOfElementLocated(MobileBy.id("com.android.permissioncontroller:id/permission_allow_foreground_only_button"))
         );
         locationPermissionAllowUsingThisAppButton.click();
+
+        } else if (Objects.equals(OsVersion.toString(), "11.0")) {
+            AndroidElement locationSelector = (AndroidElement) new WebDriverWait(driver, 30).until(
+                    ExpectedConditions.presenceOfElementLocated(MobileBy.id("com.android.permissioncontroller:id/permission_allow_foreground_only_button")));
+            locationSelector.click();
+        }
 
         // GoTo Profile Page for Login (click on profile option)
         //Thread.sleep(4000);
@@ -65,21 +74,20 @@ public class socialmediaiconlogin {
         decathlonConnectionButton.click();
 
         //Click on facebook icon
-
         //Thread.sleep(30000);
-        AndroidElement userNameInput = (AndroidElement) new WebDriverWait(driver, 50).until(
+        AndroidElement facebookIcon = (AndroidElement) new WebDriverWait(driver, 50).until(
                 //Formula of xpath=> .xpath("//Class name[@attribute name='value']")
                 ExpectedConditions.presenceOfElementLocated(MobileBy.xpath("//android.widget.Button[@resource-id='color-facebook']"))
         );
-        userNameInput.click();
+        facebookIcon.click();
 
 
         //click on allow essential and optional cookies
         //Thread.sleep(3000);
-        AndroidElement essentialcookies = (AndroidElement) new WebDriverWait(driver, 30).until(
-                ExpectedConditions.presenceOfElementLocated(MobileBy.xpath("//android.widget.Button[@resource-id='u_0_m_JW']"))
+        AndroidElement allowCookies = (AndroidElement) new WebDriverWait(driver, 30).until(
+                ExpectedConditions.presenceOfElementLocated(MobileBy.xpath("//android.widget.Button[@resource-id='u_0_m_r9']"))
         );
-        essentialcookies.click();
+        allowCookies.click();
 
         //Enter facebook email address
         AndroidElement userNameInput = (AndroidElement) new WebDriverWait(driver, 50).until(
@@ -103,6 +111,35 @@ public class socialmediaiconlogin {
         );
 
         loginButton.click();
+
+        //Enter code the connection for continue
+        //Thread.sleep(3000);
+        AndroidElement codeConnection = (AndroidElement) new WebDriverWait(driver, 30).until(
+                ExpectedConditions.presenceOfElementLocated(MobileBy.xpath("//android.widget.EditText[@resource-id='approvals_code']"))
+        );
+
+        codeConnection.sendKeys("21699422");
+
+        //click on submit code
+        //Thread.sleep(3000);
+        AndroidElement submitcodeButton = (AndroidElement) new WebDriverWait(driver, 30).until(
+                ExpectedConditions.presenceOfElementLocated(MobileBy.xpath("//android.widget.Button[@resource-id='checkpointSubmitButton-actual-button']"))
+        );
+
+        submitcodeButton.click();
+
+        Thread.sleep(3000);
+
+        try {
+            AndroidElement batchEventCloseButton = (AndroidElement) new WebDriverWait(driver, 10).until(
+                    ExpectedConditions.presenceOfElementLocated(MobileBy.id(packageName + ":id/com_batchsdk_messaging_close_button"))
+            );
+            System.out.println("Batch special event button is present");
+            batchEventCloseButton.click();
+        } catch (Exception e ) {
+            System.out.println("Batch special event button was not present");
+        }
+
 
         //Click on gothrough first hike
         Thread.sleep(3000);
@@ -131,9 +168,9 @@ public class socialmediaiconlogin {
 
     @AfterAll()
     public void tearDown() {
-        if(null != driver) {
-            System.out.println("quiting the driver");
+        //if(null != driver) {
+           // System.out.println("quiting the driver");
             driver.quit();
         }
     }
-}
+
