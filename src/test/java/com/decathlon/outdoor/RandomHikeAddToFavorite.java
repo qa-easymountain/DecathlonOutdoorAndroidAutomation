@@ -1,37 +1,39 @@
 package com.decathlon.outdoor;
 
-        import  io.appium.java_client.MobileBy;
-        import io.appium.java_client.PerformsTouchActions;
-        import io.appium.java_client.TouchAction;
-        import io.appium.java_client.android.AndroidDriver;
-        import io.appium.java_client.android.AndroidElement;
-        import io.appium.java_client.touch.WaitOptions;
-        import io.appium.java_client.touch.offset.PointOption;
-        import org.assertj.core.api.Assertions;
-        import org.junit.jupiter.api.*;
-        import org.openqa.selenium.By;
-        import org.openqa.selenium.Dimension;
-        import org.openqa.selenium.WebElement;
-        import org.openqa.selenium.support.ui.ExpectedConditions;
-        import org.openqa.selenium.support.ui.WebDriverWait;
+    import io.appium.java_client.AppiumDriver;
+    import io.appium.java_client.MobileBy;
+    import io.appium.java_client.PerformsTouchActions;
+    import io.appium.java_client.TouchAction;
+    import io.appium.java_client.android.AndroidElement;
+    import io.appium.java_client.touch.WaitOptions;
+    import io.appium.java_client.touch.offset.PointOption;
+    import org.junit.jupiter.api.*;
+    import org.openqa.selenium.By;
+    import org.openqa.selenium.Dimension;
+    import org.openqa.selenium.WebElement;
+    import org.openqa.selenium.support.ui.ExpectedConditions;
+    import org.openqa.selenium.support.ui.WebDriverWait;
 
-        import java.net.MalformedURLException;
-        import java.time.Duration;
-        import java.util.Random;
+    import java.io.IOException;
+    import java.time.Duration;
+    import java.util.Objects;
+    import java.util.Random;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
-public class randomhikeaddtofavorite {
-    private AndroidDriver<AndroidElement> driver;
+public class RandomHikeAddToFavorite {
+    private AppiumDriver<AndroidElement> driver;
 
     @BeforeEach
-    public void setup() throws MalformedURLException {
+    public void setup() throws IOException {
         driver = AndroidDriverBuilder.buildDriver();
+        //driver = BrowserstackBuilder.buildDriver("RandomHikeAddToFavorite");
     }
 
     @Test
     @DisplayName("it should download the random hike")
-    public void randomhikeaddtofavorite() throws InterruptedException {
-        String packageName = driver.getCurrentPackage();
+    public void addtoFavoriteRandomHike() throws InterruptedException {
+        String packageName = driver.getCapabilities().getCapability("appPackage").toString();
+        System.out.println(packageName);
 
         AndroidElement acceptAndCloseButton = (AndroidElement) new WebDriverWait(driver, 30).until(
                 ExpectedConditions.elementToBeClickable(MobileBy.id(packageName + ":id/button_agree")));
@@ -42,6 +44,10 @@ public class randomhikeaddtofavorite {
         AndroidElement welcomeAgree = (AndroidElement) new WebDriverWait(driver, 30).until(
                 ExpectedConditions.elementToBeClickable(MobileBy.id(packageName + ":id/onboard_proceed_btn")));
         welcomeAgree.click();
+        
+        Object OsVersion = driver.getCapabilities().getCapability("os_version");
+
+        if(Objects.equals(OsVersion.toString(), "12.0")) {
 
         // select location next to you
         AndroidElement locationSelector = (AndroidElement) new WebDriverWait(driver,  30).until(
@@ -53,6 +59,13 @@ public class randomhikeaddtofavorite {
                 ExpectedConditions.presenceOfElementLocated(MobileBy.id("com.android.permissioncontroller:id/permission_allow_foreground_only_button"))
         );
         locationPermissionAllowUsingThisAppButton.click();
+
+
+        } else if (Objects.equals(OsVersion.toString(), "11.0")) {
+            AndroidElement locationSelector = (AndroidElement) new WebDriverWait(driver, 30).until(
+                    ExpectedConditions.presenceOfElementLocated(MobileBy.id("com.android.permissioncontroller:id/permission_allow_foreground_only_button")));
+            locationSelector.click();
+        }
 
         Thread.sleep(3000);
         //===================== Random Location Selection =====================
@@ -92,37 +105,17 @@ public class randomhikeaddtofavorite {
 
         for(int count=1; count <= number; count++) {
             swipePanel(panel, driver);
-            System.out.print(count);
+            //System.out.print(count);
         }
-
 
         //===================== End: Swipe for beta test ===================
 
-
-        //driver.manage().timeouts().implicitlyWait(3000, TimeUnit.SECONDS);
         Thread.sleep(3000);
         AndroidElement addFavorite = driver.findElementById(packageName + ":id/add_favorite");
         addFavorite.click();
-        /*Thread.sleep(3000);
-        driver.manage().timeouts().implicitlyWait(3000, TimeUnit.SECONDS);
-        AndroidElement addFavorite = driver.findElementById("com.decathlon.quechuafinder:id/add_favorite");
-        addFavorite.click();*/
-
-        //ExpectedConditions.presenceOfElementLocated(MobileBy.id(packageName + ":id/tv_hike_item_title"));
-
-        // AndroidElement ackknowledgeButton = driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup[1]/android.view.ViewGroup/android.widget.TextView[2]");
-        //ackknowledgeButton.click();
-
-        //driver.manage().timeouts().implicitlyWait(3000, TimeUnit.SECONDS);
-        /*Thread.sleep(3000);
-        AndroidElement downloadRouteButton = driver.findElementById(packageName + ":id/mp_detail_btn_download");
-        downloadRouteButton.click();*/
 
         Thread.sleep(3000);
         AndroidElement continueWithDecathlonIdButton = driver.findElementById(packageName + ":id/btn_decathlon_login");
-            /*AndroidElement continueWithDecathlonIdButton = (AndroidElement) new WebDriverWait(driver, 3000).until(
-                ExpectedConditions.presenceOfElementLocated(MobileBy.id(packageName + ":id/btn_decathlon_login"))
-            );*/
         continueWithDecathlonIdButton.click();
 
         Thread.sleep(2000);
@@ -136,8 +129,8 @@ public class randomhikeaddtofavorite {
         );
         userNameInput.click();
         userNameInput.sendKeys("test.decathlonoutdoor@gmail.com");
-        //userNameInput.sendKeys("pooja@easy-mountain.com");
 
+        driver.hideKeyboard();
 
         //click on next button
         //Thread.sleep(3000);
@@ -152,7 +145,8 @@ public class randomhikeaddtofavorite {
                 ExpectedConditions.presenceOfElementLocated(MobileBy.xpath("//android.widget.EditText[@resource-id='input-password']"))
         );
         passwordInput.sendKeys("4SG!!7xG");
-        //passwordInput.sendKeys("Pooja123");
+
+        driver.hideKeyboard();
 
         //click on sign in button
         Thread.sleep(1000);
@@ -162,13 +156,17 @@ public class randomhikeaddtofavorite {
 
         signinButton.click();
 
-        //Thread.sleep(1000);
-        /*AndroidElement startButton = (AndroidElement) new WebDriverWait(driver, 300).until(
-                ExpectedConditions.presenceOfElementLocated(MobileBy.xpath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[2]"))
-        );
+        try {
+            AndroidElement batchEventCloseButton = (AndroidElement) new WebDriverWait(driver, 10).until(
+                    ExpectedConditions.presenceOfElementLocated(MobileBy.id(packageName + ":id/com_batchsdk_messaging_close_button"))
+            );
+            System.out.println("Batch special event button is present");
+            batchEventCloseButton.click();
+        } catch (Exception e ) {
+            System.out.println("Batch special event button was not present");
+        }
 
-        startButton.click();*/
-// Add to favorite
+        // Add to favorite
         Thread.sleep(1000);
         AndroidElement FavorisButton = (AndroidElement) new WebDriverWait(driver, 30).until(
                 ExpectedConditions.presenceOfElementLocated(MobileBy.xpath("//android.widget.ImageView[@resource-id='com.decathlon.quechuafinder:id/add_favorite']"))
@@ -180,7 +178,7 @@ public class randomhikeaddtofavorite {
         System.out.println("Random hike added to my favorite Successfully");
     }
 
-    public static void swipePanel(WebElement el, AndroidDriver<AndroidElement> driver) {
+    public static void swipePanel(WebElement el, AppiumDriver<AndroidElement> driver) {
 
         WebElement panel = el;
 
