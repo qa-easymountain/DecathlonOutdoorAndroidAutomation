@@ -12,7 +12,7 @@ import java.util.Objects;
 public class AndroidDriverBuilder {
     public static AndroidDriver<AndroidElement> buildDriver() throws MalformedURLException {
         // Here we are setting the apk path for running the test locally
-        String apkFileName = "app-release.apk";
+        String apkFileName = "app-release-browserstack.apk";
         String apkPath = "apk/" + apkFileName;
         if (Objects.equals(System.getenv("BITRISE_APK_PATH"), "")) {
             apkPath = System.getenv("BITRISE_APK_PATH");
@@ -31,6 +31,7 @@ public class AndroidDriverBuilder {
         //here we set our capability type
         cap.setCapability(MobileCapabilityType.AUTOMATION_NAME, "uiautomator2");
         cap.setCapability("platform", "Android");
+        cap.setCapability("os_version", "12.0");
 
 
         cap.setCapability(MobileCapabilityType.APP, app.getAbsolutePath());
