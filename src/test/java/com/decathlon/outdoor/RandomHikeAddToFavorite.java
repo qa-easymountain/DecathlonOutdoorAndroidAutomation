@@ -25,8 +25,8 @@ public class RandomHikeAddToFavorite {
 
     @BeforeEach
     public void setup() throws IOException {
-        driver = AndroidDriverBuilder.buildDriver();
-        //driver = BrowserstackBuilder.buildDriver("RandomHikeAddToFavorite");
+        //driver = AndroidDriverBuilder.buildDriver();
+        driver = BrowserstackBuilder.buildDriver("RandomHikeAddToFavorite");
     }
 
     @Test
