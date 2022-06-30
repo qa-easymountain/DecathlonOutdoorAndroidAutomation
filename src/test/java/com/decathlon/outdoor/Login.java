@@ -113,9 +113,7 @@ public class Login {
         signinButton.click();
 
 
-
-        //Check whether you are logged-in with username
-        Thread.sleep(3000);
+        //Thread.sleep(3000);
 
         try {
             AndroidElement batchEventCloseButton = (AndroidElement) new WebDriverWait(driver, 10).until(
@@ -127,6 +125,8 @@ public class Login {
             System.out.println("Batch special event button was not present");
         }
 
+        //Check whether you are logged-in with username
+        Thread.sleep(1000);
         AndroidElement usernameProfile = (AndroidElement) new WebDriverWait(driver, 30).until(
                 ExpectedConditions.presenceOfElementLocated(MobileBy.id(packageName + ":id/username_profile"))
         );
