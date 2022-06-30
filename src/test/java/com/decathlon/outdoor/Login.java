@@ -21,8 +21,6 @@ public class Login {
      //   driver = BasicSauceLabsConfiguration.setup();
         driver = BrowserstackBuilder.buildDriver("Login");
         //driver = AndroidDriverBuilder.buildDriver();
-
-
     }
 
     @Test
@@ -64,8 +62,6 @@ public class Login {
                     ExpectedConditions.presenceOfElementLocated(MobileBy.id("com.android.permissioncontroller:id/permission_allow_foreground_only_button")));
             locationSelector.click();
         }
-
-
 
         // GoTo Profile Page for Login (click on profile option)
         //Thread.sleep(4000);

@@ -30,7 +30,7 @@ public class RandomHikeAddToFavorite {
     }
 
     @Test
-    @DisplayName("it should download the random hike")
+    @DisplayName("it should add the random hike to Favorite")
     public void addtoFavoriteRandomHike() throws InterruptedException {
         String packageName = driver.getCapabilities().getCapability("appPackage").toString();
         System.out.println(packageName);
@@ -69,7 +69,7 @@ public class RandomHikeAddToFavorite {
 
         Thread.sleep(3000);
         //===================== Random Location Selection =====================
-        String[] locations = {"Grenoble", "Lyon", "Paris", "Toulouse", "Nice", "Bordeaux", "Valence", "Annecy"};
+        String[] locations = {"Montpellier", "Lyon", "Paris", "Toulouse", "Nice", "Bordeaux", "Chamonix", "Annecy"};
         Random r = new Random();
         int randomNumber= r.nextInt(locations.length);
         String randomLocation = locations[randomNumber];
@@ -166,7 +166,7 @@ public class RandomHikeAddToFavorite {
             System.out.println("Batch special event button was not present");
         }
 
-        // Add to favorite
+        // Add to favorite // See heart
         Thread.sleep(1000);
         AndroidElement FavorisButton = (AndroidElement) new WebDriverWait(driver, 30).until(
                 ExpectedConditions.presenceOfElementLocated(MobileBy.xpath("//android.widget.ImageView[@resource-id='com.decathlon.quechuafinder:id/add_favorite']"))
@@ -203,11 +203,11 @@ public class RandomHikeAddToFavorite {
 
     @AfterAll()
     public void tearDown() {
-        if(null != driver) {
+        //if(null != driver) {
             driver.quit();
         }
     }
-}
+//}
 
 
 

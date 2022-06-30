@@ -37,156 +37,156 @@ public class RandomHikeDownload {
 
         AndroidElement acceptAndCloseButton = (AndroidElement) new WebDriverWait(driver, 30).until(
                 ExpectedConditions.elementToBeClickable(MobileBy.id(packageName + ":id/button_agree")));
-            acceptAndCloseButton.click();
-            System.out.println("Cliqué sur Accepter & Fermer");
-    
+        acceptAndCloseButton.click();
+        System.out.println("Cliqué sur Accepter & Fermer");
+
         //Onboard and procees Button
         AndroidElement welcomeAgree = (AndroidElement) new WebDriverWait(driver, 30).until(
                 ExpectedConditions.elementToBeClickable(MobileBy.id(packageName + ":id/onboard_proceed_btn")));
-            welcomeAgree.click();
+        welcomeAgree.click();
 
-            Object OsVersion = driver.getCapabilities().getCapability("os_version");
+        Object OsVersion = driver.getCapabilities().getCapability("os_version");
 
-            if (Objects.equals(OsVersion.toString(), "12.0")){
+        if (Objects.equals(OsVersion.toString(), "12.0")) {
 
-                // select location next to you
-                AndroidElement locationSelector = (AndroidElement) new WebDriverWait(driver, 30).until(
-                        //ExpectedConditions.elementToBeClickable(MobileBy.id("com.android.permissioncontroller:id/permission_location_accuracy_radio_fine")));
-                        ExpectedConditions.presenceOfElementLocated(MobileBy.xpath("//android.widget.RadioButton[@resource-id='com.android.permissioncontroller:id/permission_location_accuracy_radio_fine']")));
+            // select location next to you
+            AndroidElement locationSelector = (AndroidElement) new WebDriverWait(driver, 30).until(
+                    //ExpectedConditions.elementToBeClickable(MobileBy.id("com.android.permissioncontroller:id/permission_location_accuracy_radio_fine")));
+                    ExpectedConditions.presenceOfElementLocated(MobileBy.xpath("//android.widget.RadioButton[@resource-id='com.android.permissioncontroller:id/permission_location_accuracy_radio_fine']")));
 
-                locationSelector.click();
+            locationSelector.click();
 
-                // give permission while using application
-                AndroidElement locationPermissionAllowUsingThisAppButton = (AndroidElement) new WebDriverWait(driver, 30).until(
-                        //ExpectedConditions.presenceOfElementLocated(MobileBy.id("com.android.permissioncontroller:id/permission_allow_foreground_only_button"))
-                        ExpectedConditions.presenceOfElementLocated(MobileBy.id("com.android.permissioncontroller:id/permission_allow_foreground_only_button"))
-                );
-                locationPermissionAllowUsingThisAppButton.click();
-
-            } else if (Objects.equals(OsVersion.toString(), "11.0")) {
-                AndroidElement locationSelector = (AndroidElement) new WebDriverWait(driver, 30).until(
-                        ExpectedConditions.presenceOfElementLocated(MobileBy.id("com.android.permissioncontroller:id/permission_allow_foreground_only_button")));
-                locationSelector.click();
-            }
-    
-                Thread.sleep(3000);
-                //===================== Random Location Selection =====================
-                String[] locations = {"Grenoble", "Lyon", "Paris", "Toulouse", "Nice", "Bordeaux", "Valence", "Annecy"};
-                Random r = new Random();
-                int randomNumber= r.nextInt(locations.length);
-                String randomLocation = locations[randomNumber];
-    
-                Thread.sleep(3000);
-                //Click on search bar
-                AndroidElement locationSearch = driver.findElementById(packageName + ":id/search_with_text_click_area");
-                locationSearch.click();
-                Thread.sleep(3000);
-    
-                //type the random location
-                AndroidElement locationSearchArea = driver.findElementById(packageName + ":id/edit_text_search_input");
-                locationSearchArea.sendKeys(randomLocation);
-                Thread.sleep(3000);
-    
-    
-                AndroidElement locationSelection = driver.findElementById(packageName + ":id/place_title");
-                locationSelection.click();
-    
-                //===================== Swipe for beta test ===================
-                Thread.sleep(3000);
-                WebElement panel = driver.findElement(By.xpath("hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[1]/android.view.ViewGroup/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.RelativeLayout[2]"));
-
-                Random dice = new Random();
-    
-                int number;
-    
-                number = 1 + dice.nextInt(6);
-    
-                System.out.print(number);
-    
-                //int count = number;
-    
-                for(int count=1; count <= number; count++) {
-                    swipePanel(panel, driver);
-                    //System.out.print(count);
-                }
-    
-    
-                //===================== End: Swipe for beta test ===================
-    
-    
-                //driver.manage().timeouts().implicitlyWait(3000, TimeUnit.SECONDS);
-                Thread.sleep(3000);
-                AndroidElement routName = driver.findElementById(packageName + ":id/tv_hike_item_title");
-                routName.click();
-    
-                //driver.manage().timeouts().implicitlyWait(3000, TimeUnit.SECONDS);
-                Thread.sleep(3000);
-                AndroidElement downloadRouteButton = driver.findElementById(packageName + ":id/mp_detail_btn_download");
-                downloadRouteButton.click();
-    
-                Thread.sleep(3000);
-                AndroidElement continueWithDecathlonIdButton = driver.findElementById(packageName + ":id/btn_decathlon_login");
-                continueWithDecathlonIdButton.click();
-    
-                Thread.sleep(2000);
-                ExpectedConditions.titleContains("Connexion");
-    
-                //Insert emailId
-                //Thread.sleep(30000);
-                AndroidElement userNameInput = (AndroidElement) new WebDriverWait(driver, 50).until(
-                        //Formula of xpath=> .xpath("//Class name[@attribute name='value']")
-                        ExpectedConditions.presenceOfElementLocated(MobileBy.xpath("//android.widget.EditText[@resource-id='input-email']"))
-                );
-                userNameInput.click();
-                userNameInput.sendKeys("test.decathlonoutdoor@gmail.com");
-
-                driver.hideKeyboard();
-                //click on next button
-                //Thread.sleep(3000);
-                AndroidElement nextButton = (AndroidElement) new WebDriverWait(driver, 30).until(
-                        ExpectedConditions.presenceOfElementLocated(MobileBy.xpath("//android.widget.Button[@resource-id='lookup-btn']"))
-                );
-                nextButton.click();
-
-                // insert password
-                //Thread.sleep(3000);
-                AndroidElement passwordInput = (AndroidElement) new WebDriverWait(driver, 30).until(
-                        ExpectedConditions.presenceOfElementLocated(MobileBy.xpath("//android.widget.EditText[@resource-id='input-password']"))
-                );
-                passwordInput.sendKeys("4SG!!7xG");
-                driver.hideKeyboard();
-
-            //click on sign in button
-            Thread.sleep(1000);
-            AndroidElement signinButton = (AndroidElement) new WebDriverWait(driver, 30).until(
-                    ExpectedConditions.presenceOfElementLocated(MobileBy.xpath("//android.widget.Button[@resource-id='signin-button']"))
+            // give permission while using application
+            AndroidElement locationPermissionAllowUsingThisAppButton = (AndroidElement) new WebDriverWait(driver, 30).until(
+                    //ExpectedConditions.presenceOfElementLocated(MobileBy.id("com.android.permissioncontroller:id/permission_allow_foreground_only_button"))
+                    ExpectedConditions.presenceOfElementLocated(MobileBy.id("com.android.permissioncontroller:id/permission_allow_foreground_only_button"))
             );
+            locationPermissionAllowUsingThisAppButton.click();
 
-            signinButton.click();
-
-            Thread.sleep(3000);
-
-            try {
-                AndroidElement batchEventCloseButton = (AndroidElement) new WebDriverWait(driver, 10).until(
-                        ExpectedConditions.presenceOfElementLocated(MobileBy.id(packageName + ":id/com_batchsdk_messaging_close_button"))
-                );
-                System.out.println("Batch special event button is present");
-                batchEventCloseButton.click();
-            } catch (Exception e ) {
-                System.out.println("Batch special event button was not present");
-            }
-
-
-        //Thread.sleep(1000);
-            AndroidElement startButton = (AndroidElement) new WebDriverWait(driver, 300).until(
-                    ExpectedConditions.presenceOfElementLocated(MobileBy.xpath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[2]"))
-            );
-
-            startButton.click();
-
-            //Thread.sleep(7000);
-            System.out.println("Random hike downloaded Successfully");
+        } else if (Objects.equals(OsVersion.toString(), "11.0")) {
+            AndroidElement locationSelector = (AndroidElement) new WebDriverWait(driver, 30).until(
+                    ExpectedConditions.presenceOfElementLocated(MobileBy.id("com.android.permissioncontroller:id/permission_allow_foreground_only_button")));
+            locationSelector.click();
         }
+
+        Thread.sleep(3000);
+        //===================== Random Location Selection =====================
+        String[] locations = {"Grenoble", "Lyon", "Paris", "Toulouse", "Nice", "Bordeaux", "Valence", "Annecy"};
+        Random r = new Random();
+        int randomNumber = r.nextInt(locations.length);
+        String randomLocation = locations[randomNumber];
+
+        Thread.sleep(3000);
+        //Click on search bar
+        AndroidElement locationSearch = driver.findElementById(packageName + ":id/search_with_text_click_area");
+        locationSearch.click();
+        Thread.sleep(3000);
+
+        //type the random location
+        AndroidElement locationSearchArea = driver.findElementById(packageName + ":id/edit_text_search_input");
+        locationSearchArea.sendKeys(randomLocation);
+        Thread.sleep(3000);
+
+
+        AndroidElement locationSelection = driver.findElementById(packageName + ":id/place_title");
+        locationSelection.click();
+
+        //===================== Swipe for beta test ===================
+        Thread.sleep(3000);
+        WebElement panel = driver.findElement(By.xpath("hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[1]/android.view.ViewGroup/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.RelativeLayout[2]"));
+
+        Random dice = new Random();
+
+        int number;
+
+        number = 1 + dice.nextInt(6);
+
+        System.out.print(number);
+
+        //int count = number;
+
+        for (int count = 1; count <= number; count++) {
+            swipePanel(panel, driver);
+            //System.out.print(count);
+        }
+
+
+        //===================== End: Swipe for beta test ===================
+
+
+        //driver.manage().timeouts().implicitlyWait(3000, TimeUnit.SECONDS);
+        Thread.sleep(3000);
+        AndroidElement routName = driver.findElementById(packageName + ":id/tv_hike_item_title");
+        routName.click();
+
+        //driver.manage().timeouts().implicitlyWait(3000, TimeUnit.SECONDS);
+        Thread.sleep(3000);
+        AndroidElement downloadRouteButton = driver.findElementById(packageName + ":id/mp_detail_btn_download");
+        downloadRouteButton.click();
+
+        Thread.sleep(3000);
+        AndroidElement continueWithDecathlonIdButton = driver.findElementById(packageName + ":id/btn_decathlon_login");
+        continueWithDecathlonIdButton.click();
+
+        Thread.sleep(2000);
+        ExpectedConditions.titleContains("Connexion");
+
+        //Insert emailId
+        //Thread.sleep(30000);
+        AndroidElement userNameInput = (AndroidElement) new WebDriverWait(driver, 50).until(
+                //Formula of xpath=> .xpath("//Class name[@attribute name='value']")
+                ExpectedConditions.presenceOfElementLocated(MobileBy.xpath("//android.widget.EditText[@resource-id='input-email']"))
+        );
+        userNameInput.click();
+        userNameInput.sendKeys("test.decathlonoutdoor@gmail.com");
+
+        driver.hideKeyboard();
+        //click on next button
+        //Thread.sleep(3000);
+        AndroidElement nextButton = (AndroidElement) new WebDriverWait(driver, 30).until(
+                ExpectedConditions.presenceOfElementLocated(MobileBy.xpath("//android.widget.Button[@resource-id='lookup-btn']"))
+        );
+        nextButton.click();
+
+        // insert password
+        //Thread.sleep(3000);
+        AndroidElement passwordInput = (AndroidElement) new WebDriverWait(driver, 30).until(
+                ExpectedConditions.presenceOfElementLocated(MobileBy.xpath("//android.widget.EditText[@resource-id='input-password']"))
+        );
+        passwordInput.sendKeys("4SG!!7xG");
+        driver.hideKeyboard();
+
+        //click on sign in button
+        Thread.sleep(1000);
+        AndroidElement signinButton = (AndroidElement) new WebDriverWait(driver, 30).until(
+                ExpectedConditions.presenceOfElementLocated(MobileBy.xpath("//android.widget.Button[@resource-id='signin-button']"))
+        );
+
+        signinButton.click();
+
+        Thread.sleep(3000);
+
+        try {
+            AndroidElement batchEventCloseButton = (AndroidElement) new WebDriverWait(driver, 10).until(
+                    ExpectedConditions.presenceOfElementLocated(MobileBy.id(packageName + ":id/com_batchsdk_messaging_close_button"))
+            );
+            System.out.println("Batch special event button is present");
+            batchEventCloseButton.click();
+        } catch (Exception e) {
+            System.out.println("Batch special event button was not present");
+        }
+
+        //Demaree
+        //Thread.sleep(1000);
+        AndroidElement startButton = (AndroidElement) new WebDriverWait(driver, 300).until(
+                ExpectedConditions.presenceOfElementLocated(MobileBy.xpath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[2]"))
+        );
+
+        startButton.click();
+
+        //Thread.sleep(7000);
+        System.out.println("Random hike downloaded Successfully");
+    }
 
     public static void swipePanel(WebElement el, AppiumDriver<AndroidElement> driver) {
 
@@ -205,19 +205,20 @@ public class RandomHikeDownload {
         int swipeEnd = panelScreenWidthEnd.intValue();
 
         new TouchAction<>((PerformsTouchActions) driver)
-                .press(PointOption.point(swipeStart,anchor))
+                .press(PointOption.point(swipeStart, anchor))
                 .waitAction(WaitOptions.waitOptions(Duration.ofSeconds(1)))
-                .moveTo(PointOption.point(swipeEnd,anchor))
+                .moveTo(PointOption.point(swipeEnd, anchor))
                 .release().perform();
     }
 
     @AfterAll()
     public void tearDown() {
-        if(null != driver) {
+        if (null != driver) {
             driver.quit();
         }
     }
 }
+
 
 
 
