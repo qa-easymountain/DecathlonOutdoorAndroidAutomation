@@ -5,6 +5,7 @@ import org.junit.platform.suite.api.Suite;
 
 @Suite()
 //@SelectClasses({Login.class})
-@SelectClasses({RandomHikeDownload.class})
+//@SelectClasses({RandomHikeDownload.class})
+@SelectClasses({Login.class, RandomHikeDownload.class, RandomHikeAddToFavorite.class})
 public class DecathlonOutdoorTest {
 }  	
