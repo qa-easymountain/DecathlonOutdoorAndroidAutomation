@@ -89,7 +89,7 @@ public class RandomHikeAddToFavorite {
         AndroidElement locationSelection = driver.findElementById(packageName + ":id/place_title");
         locationSelection.click();
 
-        //===================== Swipe for beta test ===================
+
         Thread.sleep(3000);
         WebElement panel = driver.findElement(By.xpath("hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.view.ViewGroup/android.widget.FrameLayout[1]/android.view.ViewGroup/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.widget.RelativeLayout[2]"));
 
