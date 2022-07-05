@@ -22,7 +22,7 @@ public class ListViewPage {
     @BeforeEach
     public void setup() throws IOException {
         //driver = AndroidDriverBuilder.buildDriver();
-        driver = BrowserstackBuilder.buildDriver("RandomHikeDownload");
+        driver = BrowserstackBuilder.buildDriver("ListViewPage");
     }
 
     @Test
