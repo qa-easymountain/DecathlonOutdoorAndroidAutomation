@@ -17,8 +17,8 @@ public class ConditionGeneralPage {
     @BeforeEach
     public void setup() throws IOException {
         //   driver = BasicSauceLabsConfiguration.setup();
-        //driver = BrowserstackBuilder.buildDriver("ConditionGeneralePage");
-        driver = AndroidDriverBuilder.buildDriver();
+        driver = BrowserstackBuilder.buildDriver("ConditionGeneralePage");
+        //driver = AndroidDriverBuilder.buildDriver();
     }
 
     @Test
