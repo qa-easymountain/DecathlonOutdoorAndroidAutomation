@@ -110,6 +110,18 @@ public class Contribution {
         signinButton.click();
         System.out.println("Login Successfully");
 
+        //Thread.sleep(3000);
+
+        try {
+            AndroidElement batchEventCloseButton = (AndroidElement) new WebDriverWait(driver, 10).until(
+                    ExpectedConditions.presenceOfElementLocated(MobileBy.id(packageName + ":id/com_batchsdk_messaging_close_button"))
+            );
+            System.out.println("Batch special event button is present");
+            batchEventCloseButton.click();
+        } catch (Exception e ) {
+            System.out.println("Batch special event button was not present");
+        }
+
         //Click on Creer une sortie button
         Thread.sleep(1000);
         AndroidElement createSortieButton = (AndroidElement) new WebDriverWait(driver, 30).until(
@@ -118,9 +130,42 @@ public class Contribution {
         createSortieButton.click();
         System.out.println("Create hike button is working properly");
 
-        Thread.sleep(5000);
+        //Click on camera button
+        Thread.sleep(1000);
+        AndroidElement cameraButton = (AndroidElement) new WebDriverWait(driver, 30).until(
+                ExpectedConditions.presenceOfElementLocated(MobileBy.id("com.decathlon.quechuafinder:id/take_picture_view"))
+        );
+        cameraButton.click();
+
+
+        //Click on allow photos button
+        Thread.sleep(1000);
+        AndroidElement allowPhotosButton = (AndroidElement) new WebDriverWait(driver, 30).until(
+                ExpectedConditions.presenceOfElementLocated(MobileBy.id("com.android.permissioncontroller:id/permission_allow_foreground_only_button"))
+        );
+        allowPhotosButton.click();
+
+        //Click on shutter button
+        Thread.sleep(1000);
+        AndroidElement shutterButton = (AndroidElement) new WebDriverWait(driver, 30).until(
+                ExpectedConditions.presenceOfElementLocated(MobileBy.id("com.android.camera2:id/shutter_button"))
+                //ExpectedConditions.presenceOfElementLocated(MobileBy.xpath("//android.widget.ImageView[@resource-id='com.android.camera2:id/shutter_button']")));
+
+        );
+        shutterButton.click();
+
+        //Click on save photo button
+        Thread.sleep(1000);
+        AndroidElement savePhotoButton = (AndroidElement) new WebDriverWait(driver, 30).until(
+                ExpectedConditions.presenceOfElementLocated(MobileBy.id("com.android.camera2:id/done_button"))
+                //ExpectedConditions.presenceOfElementLocated(MobileBy.xpath("//android.widget.ImageButton[@resource-id='com.android.camera2:id/done_button']")));
+
+        );
+        savePhotoButton.click();
+        System.out.println("Camera button is working fine");
 
         //Click on Go button
+        Thread.sleep(2000);
         AndroidElement goButton = (AndroidElement) new WebDriverWait(driver, 30).until(
                 ExpectedConditions.presenceOfElementLocated(MobileBy.id("com.decathlon.quechuafinder:id/startRecordContainer"))
         );
@@ -143,6 +188,22 @@ public class Contribution {
         closeButton.click();
         System.out.println("Cross button is working properly");
 
+        //Click on "resume Button" reprendre button
+        Thread.sleep(3000);
+        AndroidElement resumeButton = (AndroidElement) new WebDriverWait(driver, 30).until(
+                ExpectedConditions.presenceOfElementLocated(MobileBy.id("com.decathlon.quechuafinder:id/button_resume_recording"))
+        );
+        resumeButton.click();
+        System.out.println("Reprendre button is working properly");
+
+        //Click on Close (cross) Button
+        Thread.sleep(3000);
+        AndroidElement crossButton = (AndroidElement) new WebDriverWait(driver, 30).until(
+                ExpectedConditions.presenceOfElementLocated(MobileBy.id("com.decathlon.quechuafinder:id/stop_button_container"))
+        );
+        crossButton.click();
+        System.out.println("Cross button is working properly");
+
         //Click on supprimer et quitter
         Thread.sleep(3000);
         AndroidElement quitButton = (AndroidElement) new WebDriverWait(driver, 30).until(
@@ -151,18 +212,6 @@ public class Contribution {
         quitButton.click();
         System.out.println("Quit button is working properly");
 
-
-        //Thread.sleep(3000);
-
-        try {
-            AndroidElement batchEventCloseButton = (AndroidElement) new WebDriverWait(driver, 10).until(
-                    ExpectedConditions.presenceOfElementLocated(MobileBy.id(packageName + ":id/com_batchsdk_messaging_close_button"))
-            );
-            System.out.println("Batch special event button is present");
-            batchEventCloseButton.click();
-        } catch (Exception e ) {
-            System.out.println("Batch special event button was not present");
-        }
 
         //Check whether you are on creer page again
         Thread.sleep(1000);
