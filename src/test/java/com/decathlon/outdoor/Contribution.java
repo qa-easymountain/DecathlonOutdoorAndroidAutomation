@@ -1,14 +1,14 @@
 package com.decathlon.outdoor;
 
-        import io.appium.java_client.AppiumDriver;
-        import io.appium.java_client.MobileBy;
-        import io.appium.java_client.android.AndroidElement;
-        import org.assertj.core.api.Assertions;
-        import org.junit.jupiter.api.*;
-        import org.openqa.selenium.support.ui.ExpectedConditions;
-        import org.openqa.selenium.support.ui.WebDriverWait;
-        import java.io.IOException;
-        import java.util.Objects;
+    import io.appium.java_client.AppiumDriver;
+    import io.appium.java_client.MobileBy;
+    import io.appium.java_client.android.AndroidElement;
+    import org.assertj.core.api.Assertions;
+    import org.junit.jupiter.api.*;
+    import org.openqa.selenium.support.ui.ExpectedConditions;
+    import org.openqa.selenium.support.ui.WebDriverWait;
+    import java.io.IOException;
+    import java.util.Objects;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class Contribution {
@@ -17,8 +17,8 @@ public class Contribution {
     @BeforeEach
     public void setup() throws IOException {
         //   driver = BasicSauceLabsConfiguration.setup();
-        driver = BrowserstackBuilder.buildDriver("Contribution");
-        //driver = AndroidDriverBuilder.buildDriver();
+        //driver = BrowserstackBuilder.buildDriver("Contribution");
+        driver = AndroidDriverBuilder.buildDriver();
     }
 
     @Test
@@ -63,10 +63,10 @@ public class Contribution {
 
         // Tap on Créer button
         Thread.sleep(4000);
-        AndroidElement créerButton = (AndroidElement) new WebDriverWait(driver, 100).until(
+        AndroidElement createhikeButton = (AndroidElement) new WebDriverWait(driver, 100).until(
                 ExpectedConditions.presenceOfElementLocated(MobileBy.id("com.decathlon.quechuafinder:id/open_sdk_editor"))
         );
-        créerButton.click();
+        createhikeButton.click();
 
         //click on connect to login page //Continue avec decathlon
         Thread.sleep(2000);
