@@ -17,8 +17,8 @@ public class Contribution {
     @BeforeEach
     public void setup() throws IOException {
         //   driver = BasicSauceLabsConfiguration.setup();
-        //driver = BrowserstackBuilder.buildDriver("Contribution");
-        driver = AndroidDriverBuilder.buildDriver();
+        driver = BrowserstackBuilder.buildDriver("Contribution");
+        //driver = AndroidDriverBuilder.buildDriver();
     }
 
     @Test
